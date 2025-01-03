@@ -1,0 +1,65 @@
+// documentation: https://zed.dev/docs/configuring-zed
+{
+  "assistant": {
+    "default_model": {
+      "provider": "copilot_chat",
+      "model": "gpt-4o"
+    },
+    "version": "2"
+  },
+  "show_inline_completions": false,
+  "languages": {
+    "Go": {
+      "show_inline_completions": false
+    }
+  },
+  "show_copilot_suggestions": false,
+  "vim_mode": true,
+  "relative_line_numbers": true,
+  "line_indicator_format": "short",
+  "scrollbar": { "show": "always" },
+  "vertical_scroll_margin": 0,
+  "theme": "Catppuccin Frappé - No Italics",
+  "git": {
+    "git_gutter": null,
+    "gutter_debounce": null,
+    "inline_blame": { "show_commit_summary": true }
+  },
+  "gutter": { "folds": false },
+  "ui_font_fallbacks": ["JetBrainsMono Nerd Font"],
+  "ui_font_family": "TX-02",
+  "ui_font_size": 17,
+  "ui_font_features": {
+    "zero": true
+  },
+  "hover_popover_enabled": false,
+  "inlay_hints": {
+    "enabled": true
+  },
+  "show_user_picture": false,
+  "preferred_line_length": 120,
+  "soft_wrap": "bounded",
+  "toolbar": {
+    "quick_actions": false,
+    "selections_menu": false,
+    "breadcrumbs": false
+  },
+  "use_auto_surround": false,
+  "use_autoclose": false,
+  "use_system_path_prompts": false,
+  "tab_bar": { "show": false },
+  "when_closing_with_no_tabs": "keep_window_open",
+  "buffer_font_fallbacks": ["JetBrainsMono Nerd Font"],
+  "buffer_font_family": "TX-02",
+  "buffer_font_features": {
+    "zero": true
+  },
+  "buffer_font_size": 17,
+  "cursor_blink": false,
+  "confirm_quit": true,
+  "hour_format": "hour24",
+  "show_whitespaces": "boundary",
+  "tabs": { "file_icons": false },
+  "telemetry": { "diagnostics": false, "metrics": false },
+  "terminal": { "toolbar": { "breadcrumbs": false } }
+}

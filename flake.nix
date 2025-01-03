@@ -150,8 +150,13 @@
               "DUDebugMenuEnabled" = true;
               "advanced-image-options" = true;
             };
-            "com.apple.ImageCapture" = {
-              "disableHotPlug" = true;
+            "com.apple.ImageCapture".disableHotPlug = true;
+            "com.apple.mail".DisableInlineAttachmentViewing = true;
+            "com.apple.SoftwareUpdate" = {
+              "AutomaticCheckEnabled" = true;
+              "ScheduleFrequency" = 1; # weekly
+              "AutomaticDownload" = 1;
+              "CriticalUpdateInstall" = 1;
             };
             "com.apple.print.PrintingPrefs" = {
               "Quit When Finished" = true;
@@ -174,6 +179,30 @@
             TrackpadThreeFingerDrag = true;
           };
         };
+        activationScripts.postUserActivation.text = ''
+            # Function to check if a keyboard layout exists
+            function add_input_source_if_missing() {
+                local layout_name=$1
+                local layout_id=$2
+                if ! defaults read com.apple.HIToolbox AppleEnabledInputSources | grep -q "\"KeyboardLayout Name\" = \"$layout_name\""; then
+                    echo "Adding input source: $layout_name"
+                    defaults write com.apple.HIToolbox AppleEnabledInputSources -array-add \
+                    '{"InputSourceKind"="Keyboard Layout"; "KeyboardLayout ID"='"$layout_id"'; "KeyboardLayout Name"="'"$layout_name"'";}'
+                else
+                    echo "Input source $layout_name already exists."
+                fi
+            }
+
+            # Add Russian and Czech-QWERTY input sources if missing
+            add_input_source_if_missing "Russian" 19456
+            add_input_source_if_missing "Czech-QWERTY" 30778
+
+            # Restart SystemUIServer to apply changes if new input sources were added
+            if ! pgrep -q SystemUIServer; then
+                echo "Restarting SystemUIServer..."
+                killall SystemUIServer
+            fi
+        '';
       };
 
       # The platform the configuration will be used on.

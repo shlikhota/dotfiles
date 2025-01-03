@@ -1,26 +1,17 @@
 # Configurations
 
-## Install dependencies
+This repository contains a collection of personalized dotfiles for macOS, managed declaratively using Nix, including:
+- System packages and applications
+- Terminal and shell configurations
+- Development tools
+- Custom settings for macOS
+
+## Install
 ```bash
-xcode-select --install
+bash <(curl -sL https://raw.githubusercontent.com/shlikhota/dotfiles/main/install)
 ```
 
-## Install nix
-```bash
-curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
-```
-
-## Clone configurations
-```bash
-git clone https://github.com/shlikhota/dotfiles.git ~/dotfiles
-```
-
-## Apply nix configs
-```bash
-nix run nix-darwin -- switch --flake ~/dotfiles#home
-```
-
-## Update configuration
+## Update
 ```bash
 nix flake update
 darwin-rebuild switch --flake ~/dotfiles#home

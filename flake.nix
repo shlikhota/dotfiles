@@ -73,28 +73,106 @@
         stateVersion = 5;
         # Set Git commit hash for darwin-version.
         configurationRevision = self.rev or self.dirtyRev or null;
+        # https://daiderd.com/nix-darwin/manual/index.html
         defaults = {
-            NSGlobalDomain = {
-              AppleICUForce24HourTime = true;
-              AppleShowAllExtensions = true;
-              # 120, 90, 60, 30, 12, 6, 2
-              KeyRepeat = 2;
-              # 120, 94, 68, 35, 25, 15
-              InitialKeyRepeat = 15;
+          controlcenter.BatteryShowPercentage = false;
+          dock = {
+            autohide = false;
+            show-recents = false;
+            launchanim = true;
+            orientation = "bottom";
+            tilesize = 48;
+            # run screensaver on bottom left corner
+            wvous-bl-corner = 5;
+          };
+          finder = {
+            _FXShowPosixPathInTitle = true;
+            _FXSortFoldersFirst = true;
+            AppleShowAllFiles = true;
+            ShowStatusBar = true;
+            ShowPathbar = true;
+            FXEnableExtensionChangeWarning = false;
+            # “icnv” = Icon view, “Nlsv” = List view, “clmv” = Column View, “Flwv” = Gallery View The default is icnv.
+            FXPreferredViewStyle = "Nlsv";
+          };
+          loginwindow.GuestEnabled = false;
+          menuExtraClock = {
+            IsAnalog = false;
+            Show24Hour = true;
+            ShowDate = 2;
+            ShowSeconds = true;
+          };
+          NSGlobalDomain = {
+            AppleICUForce24HourTime = true;
+            AppleShowAllExtensions = true;
+            AppleShowAllFiles = true;
+            AppleShowScrollBars = "Always";
+            # 120, 90, 60, 30, 12, 6, 2
+            KeyRepeat = 2;
+            # 120, 94, 68, 35, 25, 15
+            InitialKeyRepeat = 15;
+            NSAutomaticCapitalizationEnabled = false;
+            NSAutomaticDashSubstitutionEnabled = false;
+            NSAutomaticPeriodSubstitutionEnabled = false;
+            NSAutomaticQuoteSubstitutionEnabled = false;
+            NSAutomaticSpellingCorrectionEnabled = false;
+            NSNavPanelExpandedStateForSaveMode = true;
+            NSNavPanelExpandedStateForSaveMode2 = true;
+            PMPrintingExpandedStateForPrint = true;
+            PMPrintingExpandedStateForPrint2 = true;
+          };
+          CustomSystemPreferences = {
+            "com.apple.Safari" = {
+              "ShowOverlayStatusBar" = true;
+              "AlwaysRestoreSessionAtLaunch" = true;
+              "UniversalSearchEnabled" = false;
+              "SuppressSearchSuggestions" = true;
+              "ShowFullURLInSmartSearchField" = true;
+              "HomePage" = "about:blank";
+              "AutoOpenSafeDownloads" = false;
+              # Disable Safari’s thumbnail cache for History and Top Sites
+              "DebugSnapshotsUpdatePolicy" = -2;
+              # Enable Safari’s debug menu
+              "IncludeInternalDebugMenu" = true;
+              # Enable the Develop menu and the Web Inspector in Safari
+              "IncludeDevelopMenu" = true;
+              "WebKitDeveloperExtrasEnabledPreferenceKey" = true;
+              "com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled" = true;
+              "WebAutomaticSpellingCorrectionEnabled" = false;
+              "WebContinuousSpellCheckingEnabled" = true;
+              # Disable Java
+              "WebKitJavaEnabled" = false;
+              "com.apple.Safari.ContentPageGroupIdentifier.WebKit2JavaEnabled" = false;
+              "SendDoNotTrackHTTPHeader" = true;
+              "StatusMenuVisible" = true;
             };
-            loginwindow.GuestEnabled = false;
-            trackpad = {
-              Clicking = true;
-              TrackpadThreeFingerDrag = true;
+            "com.apple.DiskUtility" = {
+              "DUDebugMenuEnabled" = true;
+              "advanced-image-options" = true;
             };
-            dock = {
-              autohide = false;
-              show-recents = false;
-              launchanim = true;
-              orientation = "bottom";
-              tilesize = 48;
+            "com.apple.ImageCapture" = {
+              "disableHotPlug" = true;
             };
-            screensaver.askForPasswordDelay = 0;
+            "com.apple.print.PrintingPrefs" = {
+              "Quit When Finished" = true;
+            };
+            "com.apple.desktopservices" = {
+              "DSDontWriteNetworkStores" = true;
+              "DSDontWriteUSBStores" = true;
+            };
+          };
+          screensaver = {
+            askForPassword = true;
+            askForPasswordDelay = 0;
+          };
+          screencapture = {
+            location = "~/Documents/screenshots/";
+            type = "png";
+          };
+          trackpad = {
+            Clicking = true;
+            TrackpadThreeFingerDrag = true;
+          };
         };
       };
 

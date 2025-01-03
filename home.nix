@@ -63,13 +63,13 @@ in
           stateVersion = "25.05";
         };
         programs = {
-          git.enable = true;
           fish.enable = true;
           starship.enable = true;
           home-manager.enable = true;
         };
         catppuccin.enable = true;
         catppuccin.flavor = "frappe";
+        catppuccin.zed.enable = false;
       };
     };
 }

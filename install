@@ -1,7 +1,12 @@
 #!/usr/bin/env bash
 
 DOTFILES_DIRECTORY="${HOME}/dotfiles"
-DOTFILES_GIT_REMOTE="git@github.com:shlikhota/dotfiles.git"
+DOTFILES_GIT_REMOTE="https://github.com/shlikhota/dotfiles.git"
+
+is_xcode_installed() {
+    xcode-select --print-path &> /dev/null
+    return $?
+}
 
 seek_confirmation() {
     printf "\n"
@@ -23,11 +28,16 @@ if ! is_confirmed; then
     exit 0
 fi
 
-if ! command -v nix > /dev/null; then
+if ! is_xcode_installed; then
     echo "Installing dependencies..."
     xcode-select --install
+    echo "Waiting for Xcode command line tools to finish installing..."
+    while ! is_xcode_installed; do
+        sleep 1
+    done
+    echo "Xcode command line tools has been installed."
 else
-    echo "Dependencies have already been installed."
+    echo "Xcode has already been installed."
 fi
 
 if [[ ! -d ${DOTFILES_DIRECTORY} ]]; then
@@ -44,6 +54,15 @@ if ! command -v nix > /dev/null; then
   curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
 else
   echo "Nix has already been installed."
+fi
+
+if ! command -v nix &>/dev/null; then
+   . "/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh"
+fi
+
+if ! command -v nix &>/dev/null; then
+    echo "Nix hasn't been installed."
+    exit 1
 fi
 
 seek_confirmation "Do you want to apply nix configuration?"

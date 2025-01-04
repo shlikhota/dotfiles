@@ -1,4 +1,4 @@
-{ config, pkgs, lib, home-manager, catppuccin, ...}:
+{ pkgs, catppuccin, ...}:
 
 let
   user = "evgenii";
@@ -42,7 +42,7 @@ in
       useGlobalPkgs = true;
       useUserPackages = true;
       verbose = true;
-      users.${user} = {pkgs, config, lib, catpuccin, ...}:{
+      users.${user} = {pkgs, config, lib, ...}:{
         imports = [
           catppuccin.homeManagerModules.catppuccin
         ];

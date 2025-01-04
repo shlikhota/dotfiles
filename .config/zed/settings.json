@@ -7,6 +7,14 @@
     },
     "version": "2"
   },
+  "auto_install_extensions": {
+    "catppuccin": true,
+    "dockerfile": true,
+    "html": true,
+    "nix": true,
+    "sql": true,
+    "templ": true
+  },
   "show_inline_completions": false,
   "languages": {
     "Go": {
@@ -26,7 +34,7 @@
     "inline_blame": { "show_commit_summary": true }
   },
   "gutter": { "folds": false },
-  "ui_font_fallbacks": ["JetBrainsMono Nerd Font"],
+  "ui_font_fallbacks": ["JetBrainsMono Nerd Font Mono"],
   "ui_font_family": "TX-02",
   "ui_font_size": 17,
   "ui_font_features": {
@@ -49,7 +57,7 @@
   "use_system_path_prompts": false,
   "tab_bar": { "show": false },
   "when_closing_with_no_tabs": "keep_window_open",
-  "buffer_font_fallbacks": ["JetBrainsMono Nerd Font"],
+  "buffer_font_fallbacks": ["JetBrainsMono Nerd Font Mono"],
   "buffer_font_family": "TX-02",
   "buffer_font_features": {
     "zero": true

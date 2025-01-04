@@ -31,9 +31,8 @@
   outputs = inputs@{ self, nix-darwin, nixpkgs, home-manager, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, kbs-tap, catppuccin, ... }:
   let
     user = "evgenii";
-    darwinSystems = [ "aarch64-darwin" "x86_64-darwin" ];
 
-    systemConfiguration = { pkgs, config, ... }: {
+    systemConfiguration = { pkgs, ... }: {
       # List packages installed in system profile. To search by name, run:
       # $ nix-env -qaP | grep wget
 
@@ -59,6 +58,7 @@
           pkgs.k9s
           pkgs.mkalias
           pkgs.neovim
+          pkgs.nixd
           pkgs.ripgrep
           pkgs.speedtest-cli
           pkgs.starship
@@ -75,7 +75,11 @@
         configurationRevision = self.rev or self.dirtyRev or null;
         # https://daiderd.com/nix-darwin/manual/index.html
         defaults = {
-          controlcenter.BatteryShowPercentage = false;
+          controlcenter = {
+            BatteryShowPercentage = false;
+            Sound = true;
+            Bluetooth = true;
+          };
           dock = {
             autohide = false;
             show-recents = false;
@@ -187,8 +191,9 @@
             Clicking = true;
             TrackpadThreeFingerDrag = true;
           };
+          WindowManager.EnableStandardClickToShowDesktop = false;
         };
-
+      };
       # The platform the configuration will be used on.
       nixpkgs.hostPlatform = "aarch64-darwin";
     };

@@ -188,25 +188,6 @@
             TrackpadThreeFingerDrag = true;
           };
         };
-        activationScripts.postUserActivation.text = ''
-            # Function to check if a keyboard layout exists
-            function add_input_source_if_missing() {
-                local layout_name=$1
-                local layout_id=$2
-                if ! defaults read com.apple.HIToolbox AppleEnabledInputSources | grep -q "$layout_name"; then
-                    echo "Adding input source: $layout_name"
-                    defaults write com.apple.HIToolbox AppleEnabledInputSources -array-add \
-                    '{"InputSourceKind"="Keyboard Layout"; "KeyboardLayout ID"='"$layout_id"'; "KeyboardLayout Name"="'"$layout_name"'";}'
-                else
-                    echo "Input source $layout_name already exists."
-                fi
-            }
-
-            # Add Russian and Czech-QWERTY input sources if missing
-            add_input_source_if_missing "Russian" 19456
-            add_input_source_if_missing "Czech-QWERTY" 30778
-        '';
-      };
 
       # The platform the configuration will be used on.
       nixpkgs.hostPlatform = "aarch64-darwin";

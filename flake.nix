@@ -107,6 +107,7 @@
             FXEnableExtensionChangeWarning = false;
             # “icnv” = Icon view, “Nlsv” = List view, “clmv” = Column View, “Flwv” = Gallery View The default is icnv.
             FXPreferredViewStyle = "Nlsv";
+            NewWindowTarget = "Home";
           };
           loginwindow.GuestEnabled = false;
           menuExtraClock = {
@@ -179,12 +180,13 @@
               "DSDontWriteUSBStores" = true;
             };
           };
-          screensaver = {
-            askForPassword = true;
-            askForPasswordDelay = 0;
-          };
+          # It seems it doesn't work on MacOS 10 and newer
+          # screensaver = {
+          #   askForPassword = true;
+          #   askForPasswordDelay = 0;
+          # };
           screencapture = {
-            location = "~/Documents/screenshots/";
+            location = "~/Documents/";
             type = "png";
           };
           trackpad = {

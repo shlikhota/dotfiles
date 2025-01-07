@@ -6,6 +6,9 @@ This repository contains a collection of personalized dotfiles for macOS, manage
 - Development tools
 - Custom settings for macOS
 
+## Prerequisites (optional)
+Terminal should have full disk access to apply Safari settings because of [containerization](https://lapcatsoftware.com/articles/containers.html) (System Settings -> Privacy & Security -> Full Disk Access)
+
 ## Install
 ```bash
 bash <(curl -sL https://raw.githubusercontent.com/shlikhota/dotfiles/main/install)
@@ -23,12 +26,6 @@ Some things still have to do manually:
 - add applications to the "Open at Login" list (such as Raycast, Shortcat, etc.)
 - add alternative source input (Czech and Russian in my case)
 - export/import Raycast config
-- turn on asking password after locking screen
-
-  **workaround:**
-  ```bash
-  sysadminctl -screenLock immediate -password -
-  ```
 
 ## Useful nix commands
 

@@ -45,8 +45,13 @@
       programs.zsh.enable = true;
       programs.fish.enable = true;
 
+      environment.variables = {
+        EDITOR = "nvim";
+      };
+
       environment.systemPackages =
         [
+          pkgs.bat
           pkgs.fd
           pkgs.fish
           pkgs.fzf
@@ -63,6 +68,7 @@
           pkgs.speedtest-cli
           pkgs.starship
           pkgs.sshs
+          pkgs.yazi
         ];
 
       fonts.packages = with pkgs; [
@@ -136,30 +142,6 @@
             PMPrintingExpandedStateForPrint2 = true;
           };
           CustomSystemPreferences = {
-            "com.apple.Safari" = {
-              "ShowOverlayStatusBar" = true;
-              "AlwaysRestoreSessionAtLaunch" = true;
-              "UniversalSearchEnabled" = false;
-              "SuppressSearchSuggestions" = true;
-              "ShowFullURLInSmartSearchField" = true;
-              "HomePage" = "about:blank";
-              "AutoOpenSafeDownloads" = false;
-              # Disable Safari’s thumbnail cache for History and Top Sites
-              "DebugSnapshotsUpdatePolicy" = -2;
-              # Enable Safari’s debug menu
-              "IncludeInternalDebugMenu" = true;
-              # Enable the Develop menu and the Web Inspector in Safari
-              "IncludeDevelopMenu" = true;
-              "WebKitDeveloperExtrasEnabledPreferenceKey" = true;
-              "com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled" = true;
-              "WebAutomaticSpellingCorrectionEnabled" = false;
-              "WebContinuousSpellCheckingEnabled" = true;
-              # Disable Java
-              "WebKitJavaEnabled" = false;
-              "com.apple.Safari.ContentPageGroupIdentifier.WebKit2JavaEnabled" = false;
-              "SendDoNotTrackHTTPHeader" = true;
-              "StatusMenuVisible" = true;
-            };
             "com.apple.DiskUtility" = {
               "DUDebugMenuEnabled" = true;
               "advanced-image-options" = true;
@@ -180,11 +162,6 @@
               "DSDontWriteUSBStores" = true;
             };
           };
-          # It seems it doesn't work on MacOS 10 and newer
-          # screensaver = {
-          #   askForPassword = true;
-          #   askForPasswordDelay = 0;
-          # };
           screencapture = {
             location = "~/Documents/";
             type = "png";
@@ -195,6 +172,46 @@
           };
           WindowManager.EnableStandardClickToShowDesktop = false;
         };
+        activationScripts.postUserActivation.text = ''
+            echo "Do you want to apply Safari configurations?"
+            read -r -p "Continue? (y/n) " -n 1 REPLY
+            printf "\n"
+            if [[ "$REPLY" =~ ^[Yy]$ ]]; then
+              defaults -currentHost write com.apple.Safari ShowOverlayStatusBar -bool true
+              defaults -currentHost write com.apple.Safari AlwaysRestoreSessionAtLaunch -bool true
+              defaults -currentHost write com.apple.Safari UniversalSearchEnabled -bool false
+              defaults -currentHost write com.apple.Safari SuppressSearchSuggestions -bool true
+              defaults -currentHost write com.apple.Safari ShowFullURLInSmartSearchField -bool true
+              defaults -currentHost write com.apple.Safari.SandboxBroker HomePage -string "about:blank"
+              defaults -currentHost write com.apple.Safari HomePage -string "about:blank"
+              defaults -currentHost write com.apple.Safari NewWindowBehavior 0
+              defaults -currentHost write com.apple.Safari NewTabBehavior 0
+              defaults -currentHost write com.apple.Safari AutoOpenSafeDownloads -bool false
+              defaults -currentHost write com.apple.Safari DebugSnapshotsUpdatePolicy -2
+              defaults -currentHost write com.apple.Safari IncludeInternalDebugMenu -bool true
+              defaults -currentHost write com.apple.Safari IncludeDevelopMenu -bool true
+              defaults -currentHost write com.apple.Safari WebKitDeveloperExtras -bool true
+              defaults -currentHost write com.apple.Safari WebKitDeveloperExtrasEnabledPreferenceKey -bool true
+              defaults -currentHost write com.apple.Safari 'WebKitPreferences.developerExtrasEnabled' -bool true
+              defaults -currentHost write com.apple.Safari 'com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled' -bool true
+              defaults -currentHost write com.apple.Safari WebAutomaticSpellingCorrectionEnabled -bool false
+              defaults -currentHost write com.apple.Safari WebContinuousSpellCheckingEnabled -bool true
+              defaults -currentHost write com.apple.Safari WebKitJavaEnabled -bool false
+              defaults -currentHost write com.apple.Safari 'com.apple.Safari.ContentPageGroupIdentifier.WebKit2JavaEnabled' -bool false
+              defaults -currentHost write com.apple.Safari SendDoNotTrackHTTPHeader -bool true
+              defaults -currentHost write com.apple.Safari StatusMenuVisible -bool true
+              defaults -currentHost write com.apple.Safari NSQuitAlwaysKeepsWindows -bool true
+              echo "Safari defaults were applied"
+            fi
+        '';
+        activationScripts.postActivation.text = ''
+          echo "Do you want to turn on asking password immediately after locking the screen (requires admin's permission)"
+          read -r -p "Continue? (y/n) " -n 1 REPLY
+          printf "\n"
+          if [[ "$REPLY" =~ ^[Yy]$ ]]; then
+            sysadminctl -screenLock immediate -password -
+          fi
+        '';
       };
       # The platform the configuration will be used on.
       nixpkgs.hostPlatform = "aarch64-darwin";

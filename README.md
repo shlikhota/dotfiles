@@ -25,6 +25,7 @@ darwin-rebuild switch --flake ~/dotfiles#home
 Some things still have to do manually:
 - add applications to the "Open at Login" list (such as Raycast, Shortcat, etc.)
 - add alternative source input (Czech and Russian in my case)
+- turn off Dictation (System Settings -> Keyboard -> Dictation -> Shortcut)
 - export/import Raycast config
 
 ## Useful nix commands

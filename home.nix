@@ -64,7 +64,12 @@ in
           stateVersion = "25.05";
         };
         programs = {
-          fish.enable = true;
+          fish = {
+            enable = true;
+            shellInit = ''
+              set -g fish_key_bindings fish_vi_key_bindings
+            '';
+          };
           starship.enable = true;
           home-manager.enable = true;
         };

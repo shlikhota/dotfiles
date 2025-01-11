@@ -1,4 +1,4 @@
-{ pkgs, catppuccin, ...}:
+{ config, pkgs, catppuccin, ...}:
 
 let
   user = "evgenii";
@@ -16,9 +16,16 @@ in
 
     homebrew = {
       enable = true;
+      global.autoUpdate = false;
+      onActivation = {
+        autoUpdate = true;
+        upgrade = true;
+        cleanup = "zap";
+      };
       brews = [
         "keyboardSwitcher"
       ];
+      casksArgs.no_quarantine = true;
       casks = [
         "homebrew/cask/docker"
         "ghostty"
@@ -36,6 +43,7 @@ in
       masApps = {
         "FSNotes" = 1277179284;
       };
+      taps = builtins.attrNames config.nix-homebrew.taps;
     };
 
     home-manager = {

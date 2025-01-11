@@ -183,9 +183,9 @@
               defaults -currentHost write com.apple.Safari SuppressSearchSuggestions -bool true
               defaults -currentHost write com.apple.Safari ShowFullURLInSmartSearchField -bool true
               defaults -currentHost write com.apple.Safari.SandboxBroker HomePage -string "about:blank"
-              defaults -currentHost write com.apple.Safari HomePage -string "about:blank"
-              defaults -currentHost write com.apple.Safari NewWindowBehavior 0
-              defaults -currentHost write com.apple.Safari NewTabBehavior 0
+              defaults -currentHost write com.apple.Safari HomePage -string ""
+              defaults -currentHost write com.apple.Safari NewWindowBehavior 1
+              defaults -currentHost write com.apple.Safari NewTabBehavior 1
               defaults -currentHost write com.apple.Safari AutoOpenSafeDownloads -bool false
               defaults -currentHost write com.apple.Safari DebugSnapshotsUpdatePolicy -2
               defaults -currentHost write com.apple.Safari IncludeInternalDebugMenu -bool true

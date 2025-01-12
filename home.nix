@@ -25,7 +25,7 @@ in
       brews = [
         "keyboardSwitcher"
       ];
-      casksArgs.no_quarantine = true;
+      caskArgs.no_quarantine = true;
       casks = [
         "homebrew/cask/docker"
         "ghostty"
@@ -77,6 +77,16 @@ in
             shellInit = ''
               set -g fish_key_bindings fish_vi_key_bindings
             '';
+            shellAliases = {
+              ga = "git add";
+              gc = "git commit";
+              gco = "git checkout";
+              gcp = "git cherry-pick";
+              gdiff = "git diff";
+              gp = "git push";
+              gs = "git status";
+              gt = "git tag";
+            };
           };
           starship.enable = true;
           home-manager.enable = true;

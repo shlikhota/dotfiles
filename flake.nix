@@ -61,9 +61,9 @@
           pkgs.gopls
           pkgs.jq
           pkgs.k9s
-          pkgs.mkalias
           pkgs.neovim
           pkgs.nixd
+          pkgs.ollama
           pkgs.ripgrep
           pkgs.speedtest-cli
           pkgs.starship
@@ -173,7 +173,7 @@
           WindowManager.EnableStandardClickToShowDesktop = false;
         };
         activationScripts.postUserActivation.text = ''
-            echo "Do you want to apply Safari configurations?"
+            echo "Do you want to apply Safari configurations? (requires Full Disk Access)"
             read -r -p "Continue? (y/n) " -n 1 REPLY
             printf "\n"
             if [[ "$REPLY" =~ ^[Yy]$ ]]; then
@@ -182,7 +182,7 @@
               defaults -currentHost write com.apple.Safari UniversalSearchEnabled -bool false
               defaults -currentHost write com.apple.Safari SuppressSearchSuggestions -bool true
               defaults -currentHost write com.apple.Safari ShowFullURLInSmartSearchField -bool true
-              defaults -currentHost write com.apple.Safari.SandboxBroker HomePage -string "about:blank"
+              defaults -currentHost write com.apple.Safari.SandboxBroker HomePage -string ""
               defaults -currentHost write com.apple.Safari HomePage -string ""
               defaults -currentHost write com.apple.Safari NewWindowBehavior 1
               defaults -currentHost write com.apple.Safari NewTabBehavior 1

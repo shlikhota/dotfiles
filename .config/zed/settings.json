@@ -2,10 +2,23 @@
 {
   "assistant": {
     "default_model": {
-      "provider": "copilot_chat",
-      "model": "gpt-4o"
+      "provider": "ollama",
+      "model": "Qwen2.5.1-Coder-14B-Instruct:latest"
     },
-    "version": "2"
+    "version": "2",
+    "enable_experimental_live_diffs": true
+  },
+  "language_models": {
+    "ollama": {
+      "api_url": "http://192.168.0.17:11434",
+      "available_models": [
+        {
+          "name": "Qwen2.5.1-Coder-14B-Instruct",
+          "display_name": "Qwen 2.5.1 Coder",
+          "max_tokens": 32768
+        }
+      ]
+    }
   },
   "auto_install_extensions": {
     "catppuccin": true,
@@ -19,6 +32,9 @@
   "languages": {
     "Go": {
       "show_inline_completions": false
+    },
+    "Nix": {
+      "language_servers": ["nixd", "!nil"]
     }
   },
   "show_copilot_suggestions": false,
@@ -69,5 +85,8 @@
   "show_whitespaces": "boundary",
   "tabs": { "file_icons": false },
   "telemetry": { "diagnostics": false, "metrics": false },
-  "terminal": { "toolbar": { "breadcrumbs": false } }
+  "terminal": {
+    "toolbar": { "breadcrumbs": false },
+    "shell": { "program": "fish" }
+  }
 }

@@ -36,11 +36,33 @@ return {
     },
     {
         "nvim-neo-tree/neo-tree.nvim",
-        version = false,
+        branch = "v3.x",
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+            "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+            "MunifTanjim/nui.nvim",
+            -- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
+        },
         lazy = false,
         opts = {
-            -- auto_clean_after_session_restore = false,
-            auto_restore_session_experimental = true,
+            follow_current_file = {
+              enabled = true
+            },
+            buffers = {
+              leave_dirs_open = true,
+              follow_current_file = {
+                  enabled = true,
+                  leave_dirs_open = true,
+              },
+              bind_to_cwd = false,
+            },
+            filesystem = {
+                filtered_items = {
+                    visible = true,
+                    hide_dotfiles = false,
+                    hide_gitignored = false,
+                }
+            }
         },
     },
     {
@@ -56,6 +78,12 @@ return {
                 auto_session_suppress_dirs = { "~/", "~/Projects", "~/Downloads", "/" },
                 auto_save_enabled = true,
                 auto_session_create_enabled = true,
+                no_restore_cmds = {
+                    'Neotree show',
+                },
+                post_restore_cmds = {
+                    'Neotree show',
+                },
                 session_lens = {
                     buftypes_to_ignore = {},
                     load_on_setup = true,

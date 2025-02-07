@@ -1,29 +1,25 @@
 // documentation: https://zed.dev/docs/configuring-zed
 {
+  "icon_theme": "Catppuccin Frappé",
   "assistant": {
     "default_model": {
-      "provider": "ollama",
-      "model": "Qwen2.5.1-Coder-14B-Instruct:latest"
+      "provider": "zed.dev",
+      "model": "claude-3-5-sonnet-latest"
     },
     "version": "2",
     "enable_experimental_live_diffs": true
   },
   "language_models": {
-    "ollama": {
-      "api_url": "http://192.168.0.17:11434",
-      "available_models": [
-        {
-          "name": "Qwen2.5.1-Coder-14B-Instruct",
-          "display_name": "Qwen 2.5.1 Coder",
-          "max_tokens": 32768
-        }
-      ]
-    }
+    // "ollama": {
+    //   "api_url": "http://192.168.0.17:11434"
+    // }
   },
   "auto_install_extensions": {
     "catppuccin": true,
+    "catppuccin_frappe": true,
     "dockerfile": true,
     "html": true,
+    "lua": true,
     "nix": true,
     "sql": true,
     "templ": true
@@ -35,6 +31,9 @@
     },
     "Nix": {
       "language_servers": ["nixd", "!nil"]
+    },
+    "Ruby": {
+      "enable_language_server": false
     }
   },
   "show_copilot_suggestions": false,
@@ -51,7 +50,7 @@
   },
   "gutter": { "folds": false },
   "ui_font_fallbacks": ["JetBrainsMono Nerd Font Mono"],
-  "ui_font_family": "TX-02",
+  "ui_font_family": "Berkeley Mono",
   "ui_font_size": 17,
   "ui_font_features": {
     "zero": true
@@ -66,7 +65,7 @@
   "toolbar": {
     "quick_actions": false,
     "selections_menu": false,
-    "breadcrumbs": false
+    "breadcrumbs": true
   },
   "use_auto_surround": false,
   "use_autoclose": false,
@@ -74,7 +73,7 @@
   "tab_bar": { "show": false },
   "when_closing_with_no_tabs": "keep_window_open",
   "buffer_font_fallbacks": ["JetBrainsMono Nerd Font Mono"],
-  "buffer_font_family": "TX-02",
+  "buffer_font_family": "Berkeley Mono",
   "buffer_font_features": {
     "zero": true
   },

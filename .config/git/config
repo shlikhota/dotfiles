@@ -10,3 +10,7 @@
 
 [pull]
         rebase = true
+
+[core]
+        ignorecase = false
+

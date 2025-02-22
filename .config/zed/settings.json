@@ -1,5 +1,8 @@
 // documentation: https://zed.dev/docs/configuring-zed
 {
+  "features": {
+    "edit_prediction_provider": "zed"
+  },
   "icon_theme": "Catppuccin Frappé",
   "assistant": {
     "default_model": {

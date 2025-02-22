@@ -27,16 +27,16 @@ in
       ];
       caskArgs.no_quarantine = true;
       casks = [
-        "homebrew/cask/docker"
-        "ghostty"
-        "shortcat"
-        "discord"
-        "telegram"
-        "zoom"
-        "iina"
-        "raycast"
-        "google-chrome"
-        "zed"
+        {name = "homebrew/cask/docker"; greedy = true; }
+        {name = "ghostty"; greedy = true; }
+        {name = "shortcat"; greedy = false; }
+        {name = "discord"; greedy = true; }
+        {name = "telegram"; greedy = true; }
+        {name = "zoom"; greedy = true; }
+        {name = "iina"; greedy = true; }
+        {name = "raycast"; greedy = true; }
+        {name = "google-chrome"; greedy = true; }
+        {name = "zed"; greedy = true; }
       ];
       # $ nix shell nixpkgs#mas
       # $ mas search <app name>

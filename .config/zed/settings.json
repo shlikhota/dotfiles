@@ -37,6 +37,10 @@
     },
     "Ruby": {
       "enable_language_server": false
+    },
+    "CSharp": {
+      "hard_tabs": true,
+      "tab_size": 4
     }
   },
   "show_copilot_suggestions": false,
@@ -90,5 +94,13 @@
   "terminal": {
     "toolbar": { "breadcrumbs": false },
     "shell": { "program": "fish" }
+  },
+  "lsp": {
+    "omnisharp": {
+      "binary": {
+        "path": "/Users/evgenii/Downloads/omnisharp-osx-arm64-net6.0/OmniSharp",
+        "arguments": ["-lsp"]
+      }
+    }
   }
 }

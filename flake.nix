@@ -76,6 +76,7 @@
         stateVersion = 5;
         # Set Git commit hash for darwin-version.
         configurationRevision = self.rev or self.dirtyRev or null;
+        primaryUser = "evgenii";
         # https://daiderd.com/nix-darwin/manual/index.html
         defaults = {
           controlcenter = {
@@ -169,45 +170,45 @@
           };
           WindowManager.EnableStandardClickToShowDesktop = false;
         };
-        activationScripts.postUserActivation.text = ''
+        activationScripts.postActivation.text = ''
             echo "Do you want to apply Safari configurations? (requires Full Disk Access)"
             read -r -p "Continue? (y/n) " -n 1 REPLY
             printf "\n"
             if [[ "$REPLY" =~ ^[Yy]$ ]]; then
-              defaults -currentHost write com.apple.Safari ShowOverlayStatusBar -bool true
-              defaults -currentHost write com.apple.Safari AlwaysRestoreSessionAtLaunch -bool true
-              defaults -currentHost write com.apple.Safari UniversalSearchEnabled -bool false
-              defaults -currentHost write com.apple.Safari SuppressSearchSuggestions -bool true
-              defaults -currentHost write com.apple.Safari ShowFullURLInSmartSearchField -bool true
-              defaults -currentHost write com.apple.Safari.SandboxBroker HomePage -string ""
-              defaults -currentHost write com.apple.Safari HomePage -string ""
-              defaults -currentHost write com.apple.Safari NewWindowBehavior 1
-              defaults -currentHost write com.apple.Safari NewTabBehavior 1
-              defaults -currentHost write com.apple.Safari AutoOpenSafeDownloads -bool false
-              defaults -currentHost write com.apple.Safari DebugSnapshotsUpdatePolicy -2
-              defaults -currentHost write com.apple.Safari IncludeInternalDebugMenu -bool true
-              defaults -currentHost write com.apple.Safari IncludeDevelopMenu -bool true
-              defaults -currentHost write com.apple.Safari WebKitDeveloperExtras -bool true
-              defaults -currentHost write com.apple.Safari WebKitDeveloperExtrasEnabledPreferenceKey -bool true
-              defaults -currentHost write com.apple.Safari 'WebKitPreferences.developerExtrasEnabled' -bool true
-              defaults -currentHost write com.apple.Safari 'com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled' -bool true
-              defaults -currentHost write com.apple.Safari WebAutomaticSpellingCorrectionEnabled -bool false
-              defaults -currentHost write com.apple.Safari WebContinuousSpellCheckingEnabled -bool true
-              defaults -currentHost write com.apple.Safari WebKitJavaEnabled -bool false
-              defaults -currentHost write com.apple.Safari 'com.apple.Safari.ContentPageGroupIdentifier.WebKit2JavaEnabled' -bool false
-              defaults -currentHost write com.apple.Safari SendDoNotTrackHTTPHeader -bool true
-              defaults -currentHost write com.apple.Safari StatusMenuVisible -bool true
-              defaults -currentHost write com.apple.Safari NSQuitAlwaysKeepsWindows -bool true
+              sudo -u ${user} defaults -currentHost write com.apple.Safari ShowOverlayStatusBar -bool true
+              sudo -u ${user} defaults -currentHost write com.apple.Safari AlwaysRestoreSessionAtLaunch -bool true
+              sudo -u ${user} defaults -currentHost write com.apple.Safari UniversalSearchEnabled -bool false
+              sudo -u ${user} defaults -currentHost write com.apple.Safari SuppressSearchSuggestions -bool true
+              sudo -u ${user} defaults -currentHost write com.apple.Safari ShowFullURLInSmartSearchField -bool true
+              sudo -u ${user} defaults -currentHost write com.apple.Safari.SandboxBroker HomePage -string ""
+              sudo -u ${user} defaults -currentHost write com.apple.Safari HomePage -string ""
+              # 0 - homepage, 1 - empty page, 2 - same page, 3 - bookmarks
+              sudo -u ${user} defaults -currentHost write com.apple.Safari NewWindowBehavior 1
+              sudo -u ${user} defaults -currentHost write com.apple.Safari NewTabBehavior 1
+              sudo -u ${user} defaults -currentHost write com.apple.Safari AutoOpenSafeDownloads -bool false
+              sudo -u ${user} defaults -currentHost write com.apple.Safari DebugSnapshotsUpdatePolicy -2
+              sudo -u ${user} defaults -currentHost write com.apple.Safari IncludeInternalDebugMenu -bool true
+              sudo -u ${user} defaults -currentHost write com.apple.Safari IncludeDevelopMenu -bool true
+              sudo -u ${user} defaults -currentHost write com.apple.Safari WebKitDeveloperExtras -bool true
+              sudo -u ${user} defaults -currentHost write com.apple.Safari WebKitDeveloperExtrasEnabledPreferenceKey -bool true
+              sudo -u ${user} defaults -currentHost write com.apple.Safari 'WebKitPreferences.developerExtrasEnabled' -bool true
+              sudo -u ${user} defaults -currentHost write com.apple.Safari 'com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled' -bool true
+              sudo -u ${user} defaults -currentHost write com.apple.Safari WebAutomaticSpellingCorrectionEnabled -bool false
+              sudo -u ${user} defaults -currentHost write com.apple.Safari WebContinuousSpellCheckingEnabled -bool true
+              sudo -u ${user} defaults -currentHost write com.apple.Safari WebKitJavaEnabled -bool false
+              sudo -u ${user} defaults -currentHost write com.apple.Safari 'com.apple.Safari.ContentPageGroupIdentifier.WebKit2JavaEnabled' -bool false
+              sudo -u ${user} defaults -currentHost write com.apple.Safari SendDoNotTrackHTTPHeader -bool true
+              sudo -u ${user} defaults -currentHost write com.apple.Safari StatusMenuVisible -bool true
+              sudo -u ${user} defaults -currentHost write com.apple.Safari NSQuitAlwaysKeepsWindows -bool true
               echo "Safari defaults were applied"
             fi
-        '';
-        activationScripts.postActivation.text = ''
-          echo "Do you want to turn on asking password immediately after locking the screen (requires admin's permission)"
-          read -r -p "Continue? (y/n) " -n 1 REPLY
-          printf "\n"
-          if [[ "$REPLY" =~ ^[Yy]$ ]]; then
-            sysadminctl -screenLock immediate -password -
-          fi
+
+            echo "Do you want to turn on asking password immediately after locking the screen (requires admin's permission)"
+            read -r -p "Continue? (y/n) " -n 1 REPLY
+            printf "\n"
+            if [[ "$REPLY" =~ ^[Yy]$ ]]; then
+              sudo -u ${user} sysadminctl -screenLock immediate -password -
+            fi
         '';
       };
       # The platform the configuration will be used on.

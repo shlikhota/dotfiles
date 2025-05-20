@@ -52,7 +52,7 @@ in
       verbose = true;
       users.${user} = {pkgs, config, lib, ...}:{
         imports = [
-          catppuccin.homeManagerModules.catppuccin
+          catppuccin.homeModules.catppuccin
         ];
         home = {
           enableNixpkgsReleaseCheck = false;

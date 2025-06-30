@@ -17,7 +17,7 @@ bash <(curl -sL https://raw.githubusercontent.com/shlikhota/dotfiles/main/instal
 ## Update
 ```bash
 nix flake update
-darwin-rebuild switch --flake ~/dotfiles#home
+sudo darwin-rebuild switch --flake ~/dotfiles#home
 ```
 
 ## Unautomated

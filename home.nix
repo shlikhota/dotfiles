@@ -59,6 +59,7 @@ in
           packages = [
             pkgs.cowsay
             pkgs.neofetch
+            pkgs.qmk
           ];
           file = lib.mkMerge [
             { ".config/hello".text = "hello world"; }

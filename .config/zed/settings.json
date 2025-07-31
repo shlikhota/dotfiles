@@ -1,17 +1,24 @@
 // documentation: https://zed.dev/docs/configuring-zed
 {
+  "context_servers": {
+    "mcp-server-context7": {
+      "source": "extension",
+      "enabled": true,
+      "settings": {
+        "default_minimum_tokens": "10000"
+      }
+    }
+  },
+  "agent": {
+    "default_model": {
+      "provider": "zed.dev",
+      "model": "claude-3-7-sonnet"
+    }
+  },
   "features": {
     "edit_prediction_provider": "zed"
   },
   "icon_theme": "Catppuccin Frappé",
-  "assistant": {
-    "default_model": {
-      "provider": "zed.dev",
-      "model": "claude-3-5-sonnet-latest"
-    },
-    "version": "2",
-    "enable_experimental_live_diffs": true
-  },
   "language_models": {
     // "ollama": {
     //   "api_url": "http://192.168.0.17:11434"
@@ -34,12 +41,8 @@
     },
     "Nix": {
       "language_servers": ["nixd", "!nil"]
-    },
-    "Ruby": {
-      "enable_language_server": false
     }
   },
-  "show_copilot_suggestions": false,
   "vim_mode": true,
   "relative_line_numbers": true,
   "line_indicator_format": "short",
@@ -62,7 +65,7 @@
   "inlay_hints": {
     "enabled": true
   },
-  "show_user_picture": false,
+  "title_bar": { "show_user_picture": false },
   "preferred_line_length": 120,
   "soft_wrap": "bounded",
   "toolbar": {
@@ -83,7 +86,7 @@
   "buffer_font_size": 17,
   "cursor_blink": false,
   "confirm_quit": true,
-  "hour_format": "hour24",
+  "journal": { "hour_format": "hour24" },
   "show_whitespaces": "boundary",
   "tabs": { "file_icons": false },
   "telemetry": { "diagnostics": false, "metrics": false },

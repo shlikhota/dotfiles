@@ -19,3 +19,4 @@ window-padding-x = 8
 window-padding-y = 8
 window-title-font-family = "JetBrains Mono Nerd Font"
 window-title-font-family = "Berkeley Mono"
+keybind = shift+enter=text:\n

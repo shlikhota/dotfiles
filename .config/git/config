@@ -2,9 +2,6 @@
         name = Evgenii Shlikhota
         email = shlikhota@gmail.com
 
-[url "ssh://git@github.com/"]
-        insteadOf = https://github.com/
-
 [init]
         defaultBranch = main
 

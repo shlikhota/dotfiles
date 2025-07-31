@@ -38,7 +38,9 @@
 
       # Necessary for using flakes on this system.
       nix.settings.experimental-features = "nix-command flakes";
-
+      nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [
+        "claude-code"
+      ];
       programs.zsh.enable = true;
       programs.fish.enable = true;
 
@@ -49,6 +51,7 @@
       environment.systemPackages =
         [
           pkgs.bat
+          pkgs.claude-code
           pkgs.fd
           pkgs.fish
           pkgs.fzf

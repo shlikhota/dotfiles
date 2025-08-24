@@ -1,14 +1,9 @@
-{ config, pkgs, catppuccin, ...}:
+{ config, pkgs, lib, catppuccin, user, ...}:
 
 let
-  user = "evgenii";
 in
 {
-    programs.zsh.enable = true;
-    programs.fish.enable = true;
-
     users.users.${user} = {
-      name = "${user}";
       home = "/Users/${user}";
       isHidden = false;
       shell = pkgs.fish;
@@ -16,15 +11,8 @@ in
 
     homebrew = {
       enable = true;
-      global.autoUpdate = false;
-      onActivation = {
-        autoUpdate = true;
-        upgrade = true;
-        cleanup = "zap";
-      };
-      brews = [
-        "keyboardSwitcher"
-      ];
+      onActivation = { autoUpdate = false; upgrade = false; cleanup = "zap"; };
+      brews = [  "keyboardSwitcher" ];
       caskArgs.no_quarantine = true;
       casks = [
         {name = "homebrew/cask/docker"; greedy = true; }
@@ -43,23 +31,29 @@ in
       masApps = {
         "FSNotes" = 1277179284;
       };
-      taps = builtins.attrNames config.nix-homebrew.taps;
+      taps = [
+        "homebrew/core"
+        "homebrew/cask"
+        "homebrew/bundle"
+        "lutzifer/tap"
+      ];
     };
 
     home-manager = {
       useGlobalPkgs = true;
       useUserPackages = true;
       verbose = true;
+
       users.${user} = {pkgs, config, lib, ...}:{
-        imports = [
-          catppuccin.homeModules.catppuccin
-        ];
+        imports = [ catppuccin.homeModules.catppuccin ];
         home = {
           enableNixpkgsReleaseCheck = false;
-          packages = [
-            pkgs.cowsay
-            pkgs.neofetch
-            pkgs.qmk
+          stateVersion = "25.05";
+          packages = with pkgs; [
+            cowsay
+            neofetch
+            qmk
+            nginx-language-server
           ];
           file = lib.mkMerge [
             { ".config/hello".text = "hello world"; }
@@ -70,7 +64,6 @@ in
             { ".config/nvim".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/.config/nvim"; }
             { ".config/zed".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/.config/zed"; }
           ];
-          stateVersion = "25.05";
         };
         programs = {
           fish = {
@@ -92,9 +85,11 @@ in
           starship.enable = true;
           home-manager.enable = true;
         };
-        catppuccin.enable = true;
-        catppuccin.flavor = "frappe";
-        catppuccin.zed.enable = false;
+        catppuccin = {
+          enable = true;
+          flavor = "frappe";
+          zed.enable = false;
+        };
       };
     };
 }

@@ -10,20 +10,12 @@ is_xcode_installed() {
 
 seek_confirmation() {
     printf "\n"
-    echo "$@"
-    read -p "Continue? (y/n) " -n 1 REPLY
+    read -r -p "$* (y/n) " -n 1 REPLY
     printf "\n"
+    [[ "$REPLY" =~ ^[Yy]$ ]]
 }
 
-is_confirmed() {
-    if [[ "$REPLY" =~ ^[Yy]$ ]]; then
-      return 0
-    fi
-    return 1
-}
-
-seek_confirmation "There will be installed xcode cli tools and nix. Do you want to proceed?"
-if ! is_confirmed; then
+if ! seek_confirmation "There will be installed xcode cli tools and nix. Do you want to proceed?"; then
     echo "Canceled."
     exit 0
 fi
@@ -65,9 +57,17 @@ if ! command -v nix &>/dev/null; then
     exit 1
 fi
 
-seek_confirmation "Do you want to apply nix configuration?"
-if is_confirmed; then
+if seek_confirmation "Do you want to apply nix configuration?"; then
     nix run nix-darwin -- switch --flake ${DOTFILES_DIRECTORY}#home
-else
-    echo "Configurations haven't been applied."
+    echo "Nix configurations haven been applied."
+fi
+
+if seek_confirmation "Do you want to apply Safari configuration?"; then
+    ./scripts/safari-defaults.sh
+    echo "Safari configurations have been applied."
+fi
+
+if seek_confirmation "Do you want to set asking password immediately after locking screen?"; then
+    sysadminctl -screenLock immediate -password -
+    echo "Password will be asked right after locking screen."
 fi

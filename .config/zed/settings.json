@@ -40,6 +40,7 @@
       "show_edit_predictions": false
     },
     "Nix": {
+      "format_on_save": "off",
       "language_servers": ["nixd", "!nil"]
     }
   },
@@ -76,6 +77,7 @@
   "use_auto_surround": false,
   "use_autoclose": false,
   "use_system_path_prompts": false,
+  "max_tabs": 1,
   "tab_bar": { "show": false },
   "when_closing_with_no_tabs": "keep_window_open",
   "buffer_font_fallbacks": ["JetBrainsMono Nerd Font Mono"],

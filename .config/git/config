@@ -1,13 +1,12 @@
 [user]
-        name = Evgenii Shlikhota
-        email = shlikhota@gmail.com
+  name = Evgenii Shlikhota
+  email = shlikhota@gmail.com
 
 [init]
-        defaultBranch = main
+  defaultBranch = main
 
 [pull]
-        rebase = true
+  rebase = true
 
 [core]
-        ignorecase = false
-
+  ignorecase = false

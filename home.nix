@@ -57,7 +57,7 @@ in
             qmk
             nginx-language-server
           ];
-          sessionVariables.SHELL = "${pkgs.fish}/bin/fish";
+          sessionVariables.SHELL = "fish";
           file = lib.mkMerge [
             { ".config/hello".text = "hello world"; }
             { "Library/LaunchAgents/environment.plist".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/environment.plist"; }

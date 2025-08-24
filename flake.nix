@@ -11,7 +11,7 @@
     home-manager.url = "github:nix-community/home-manager/release-25.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    catppuccin.url = "github:catppuccin/nix";
+    catppuccin.url = "github:catppuccin/nix/release-25.05";
     nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
 
     homebrew-bundle = {
@@ -32,24 +32,16 @@
     };
   };
 
-  outputs = inputs@{ self, nix-darwin, nixpkgs, home-manager, nix-homebrew, catppuccin, ... }:
+  outputs = inputs@{ self, nix-darwin, nixpkgs, nixpkgs-unstable, home-manager, nix-homebrew, catppuccin, ... }:
   let
+    system = "aarch64-darwin";
     user = "evgenii";
+
     allowUnfreePackages = [ "claude-code" ];
-    lib = inputs.nixpks.lib;
-    pkgsStable = import inputs.nixpkgs {
-      system = "aarch64-darwin";
-      config = {
-        allowUnfree = true;
-        allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) allowUnfreePackages;
-      };
-    };
-    pkgsUnstable = import inputs.nixpkgs-unstable {
-      system = "aarch64-darwin";
-      config = {
-        allowUnfree = true;
-        allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) allowUnfreePackages;
-      };
+    nixConfig = {
+      allowUnfree = true;
+      allowUnfreePredicate = pkg:
+        builtins.elem (nixpkgs.lib.getName pkg) allowUnfreePackages;
     };
 
     systemConfiguration = { pkgs, ... }: {
@@ -78,8 +70,8 @@
         fzf
         git
         go
-        golangci-lint
-        gopls
+        unstable.golangci-lint
+        unstable.gopls
         jq
         k9s
         neovim
@@ -111,7 +103,7 @@
             Bluetooth = true;
           };
           dock = {
-            autohide = false;
+            autohide = true;
             show-recents = false;
             launchanim = true;
             orientation = "bottom";
@@ -205,15 +197,19 @@
   in
   {
     darwinConfigurations."home" = nix-darwin.lib.darwinSystem {
-      system = "aarch64-darwin";
-      specialArgs = {
-          inherit catppuccin;
-          inherit user;
-      };
+      inherit system;
+      specialArgs = { inherit catppuccin user; };
       modules = [
-        { nixpkgs = {
-            pkgs = pkgsStable;
-            overlays = [ (final: prev: { unstable = pkgsUnstable; }) ];
+        {
+          nixpkgs = {
+            # main package set from stable
+            pkgs = import nixpkgs { inherit system; config = nixConfig; };
+            # overlay adds unstable under pkgs.unstable
+            overlays = [
+              (final: prev: {
+                unstable = import nixpkgs-unstable { inherit system; config = nixConfig; };
+              })
+            ];
           };
         }
         home-manager.darwinModules.home-manager

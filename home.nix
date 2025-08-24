@@ -46,6 +46,8 @@ in
 
       users.${user} = {pkgs, config, lib, ...}:{
         imports = [ catppuccin.homeModules.catppuccin ];
+        xdg.enable = true;
+        xdg.configHome = "/Users/${user}/.config";
         home = {
           enableNixpkgsReleaseCheck = false;
           stateVersion = "25.05";
@@ -82,13 +84,15 @@ in
               gt = "git tag";
             };
           };
-          starship.enable = true;
+          fzf.enable = true;
           home-manager.enable = true;
+          k9s.enable = true;
+          starship.enable = true;
+          yazi.enable = true;
         };
         catppuccin = {
           enable = true;
           flavor = "frappe";
-          zed.enable = false;
         };
       };
     };

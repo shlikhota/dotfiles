@@ -40,3 +40,21 @@ nix-shell -p llama-cpp aider-chat
 # run package without installing it globally
 nix run nixpkgs#neofetch
 ```
+
+## AI suggestions for commit messages
+
+Ollama:
+```sh
+set -U AI_COMMIT_PROVIDER "ollama"
+set -U OLLAMA_MODEL "qwen2.5-coder:7b"
+set -U OLLAMA_NUM_CTX 32768
+git commit -m <tab> # or just `gcm` that use fzf
+```
+
+OpenAI:
+```sh
+set -U AI_COMMIT_PROVIDER "openai"
+set -U OPENAI_TOKEN "your_token"
+set -U OPENAI_MODEL "" # optional, gpt-4o-mini as default
+git commit -m <tab> # or just `gcm` that use fzf
+```

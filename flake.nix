@@ -64,7 +64,10 @@
 
       environment.systemPackages = with pkgs; [
         bat
-        claude-code
+        unstable.claude-code
+        unstable.codex
+        colima
+        docker
         fd
         fish
         fzf
@@ -73,6 +76,7 @@
         unstable.golangci-lint
         unstable.gopls
         jq
+        kubectl
         k9s
         neovim
         nixd

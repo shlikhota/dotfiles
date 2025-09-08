@@ -15,7 +15,6 @@ in
       brews = [  "keyboardSwitcher" ];
       caskArgs.no_quarantine = true;
       casks = [
-        {name = "homebrew/cask/docker"; greedy = true; }
         {name = "ghostty"; greedy = true; }
         {name = "shortcat"; greedy = false; }
         {name = "discord"; greedy = true; }

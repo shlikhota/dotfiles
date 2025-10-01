@@ -23,7 +23,7 @@ in
         {name = "zoom"; greedy = true; }
         {name = "iina"; greedy = true; }
         {name = "raycast"; greedy = false; }
-        {name = "google-chrome"; greedy = false; }
+        {name = "ungoogled-chromium"; greedy = false; }
         {name = "zed"; greedy = false; }
       ];
       # $ nix shell nixpkgs#mas

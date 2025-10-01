@@ -143,6 +143,7 @@
             ShowSeconds = true;
           };
           NSGlobalDomain = {
+            _HIHideMenuBar = true;
             AppleICUForce24HourTime = true;
             AppleShowAllExtensions = true;
             AppleShowAllFiles = true;

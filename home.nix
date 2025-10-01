@@ -12,19 +12,19 @@ in
 
     homebrew = {
       enable = true;
-      onActivation = { autoUpdate = false; upgrade = false; cleanup = "zap"; };
+      onActivation = { autoUpdate = true; upgrade = true; cleanup = "zap"; };
       brews = [  "keyboardSwitcher" ];
       caskArgs.no_quarantine = true;
       casks = [
-        {name = "ghostty"; greedy = true; }
-        {name = "shortcat"; greedy = false; }
+        {name = "ghostty"; greedy = false; }
+        {name = "shortcat"; greedy = true; }
         {name = "discord"; greedy = true; }
-        {name = "telegram"; greedy = true; }
+        {name = "telegram"; greedy = false; }
         {name = "zoom"; greedy = true; }
         {name = "iina"; greedy = true; }
-        {name = "raycast"; greedy = true; }
-        {name = "google-chrome"; greedy = true; }
-        {name = "zed"; greedy = true; }
+        {name = "raycast"; greedy = false; }
+        {name = "google-chrome"; greedy = false; }
+        {name = "zed"; greedy = false; }
       ];
       # $ nix shell nixpkgs#mas
       # $ mas search <app name>

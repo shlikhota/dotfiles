@@ -5,7 +5,7 @@ defaults -currentHost write com.apple.Safari SuppressSearchSuggestions -bool tru
 defaults -currentHost write com.apple.Safari ShowFullURLInSmartSearchField -bool true
 defaults -currentHost write com.apple.Safari.SandboxBroker HomePage -string ""
 defaults -currentHost write com.apple.Safari HomePage -string ""
-1 - empty page, 2 - same page, 3 - bookmarks
+# 1 - empty page, 2 - same page, 3 - bookmarks
 defaults -currentHost write com.apple.Safari NewWindowBehavior 1
 defaults -currentHost write com.apple.Safari NewTabBehavior 1
 defaults -currentHost write com.apple.Safari AutoOpenSafeDownloads -bool false

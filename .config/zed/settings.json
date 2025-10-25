@@ -9,12 +9,6 @@
       }
     }
   },
-  "agent": {
-    "default_model": {
-      "provider": "zed.dev",
-      "model": "claude-3-7-sonnet"
-    }
-  },
   "features": {
     "edit_prediction_provider": "zed"
   },

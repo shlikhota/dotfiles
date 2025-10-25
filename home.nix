@@ -47,7 +47,7 @@ in
       users.${user} = {pkgs, config, lib, ...}:{
         imports = [ catppuccin.homeModules.catppuccin ];
         xdg.enable = true;
-        xdg.configHome = "/Users/${user}/.config";
+        xdg.configHome = "${config.home.homeDirectory}/.config";
         home = {
           enableNixpkgsReleaseCheck = false;
           stateVersion = "25.05";

@@ -56,7 +56,7 @@ git commit -m <tab> # or just `gcm` that use fzf
 OpenAI:
 ```fish
 set -U AI_COMMIT_PROVIDER "openai"
-set -U OPENAI_TOKEN "your_token"
+set -U OPENAI_API_KEY "your_token"
 set -U OPENAI_MODEL "" # optional, gpt-4o-mini as default
 git commit -m <tab> # or just `gcm` that use fzf
 ```

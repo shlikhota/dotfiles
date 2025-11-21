@@ -40,7 +40,7 @@
     }
   },
   "vim_mode": true,
-  "relative_line_numbers": true,
+  "relative_line_numbers": "enabled",
   "line_indicator_format": "short",
   "scrollbar": { "show": "always" },
   "vertical_scroll_margin": 0,
@@ -48,7 +48,7 @@
   "git": {
     "git_gutter": null,
     "gutter_debounce": null,
-    "inline_blame": { "show_commit_summary": true }
+    "inline_blame": { "show_commit_summary": true, "min_column": 121 }
   },
   "gutter": { "folds": false },
   "ui_font_fallbacks": ["JetBrainsMono Nerd Font Mono"],

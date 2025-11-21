@@ -1,6 +1,7 @@
 { user, ... }:
 
 {
+  # https://daiderd.com/nix-darwin/manual/index.html
   system.defaults = {
     controlcenter = {
       BatteryShowPercentage = false;

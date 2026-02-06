@@ -13,7 +13,7 @@ in
     homebrew = {
       enable = true;
       onActivation = { autoUpdate = true; upgrade = true; cleanup = "zap"; };
-      brews = [  "keyboardSwitcher" ];
+      brews = [  "keyboardSwitcher" "mole" ];
       caskArgs.no_quarantine = true;
       casks = [
         {name = "ghostty"; greedy = false; }

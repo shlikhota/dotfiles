@@ -76,6 +76,7 @@
         unstable.golangci-lint
         unstable.gopls
         jq
+        kanata
         kubectl
         k9s
         neovim
@@ -87,6 +88,34 @@
         sshs
         yazi
       ];
+
+      # Karabiner Virtual HID Daemon (must start first)
+      launchd.daemons.karabiner-vhid = {
+        serviceConfig = {
+          Label = "org.nixos.karabiner-vhid";
+          ProgramArguments = [
+            "/Library/Application Support/org.pqrs/Karabiner-DriverKit-VirtualHIDDevice/Applications/Karabiner-VirtualHIDDevice-Daemon.app/Contents/MacOS/Karabiner-VirtualHIDDevice-Daemon"
+          ];
+          RunAtLoad = true;
+          KeepAlive = true;
+        };
+      };
+
+      # Kanata daemon
+      launchd.daemons.kanata = {
+        serviceConfig = {
+          Label = "org.nixos.kanata";
+          ProgramArguments = [
+            "${pkgs.kanata}/bin/kanata"
+            "--cfg"
+            "/Users/${user}/.config/kanata/kanata.kbd"  # ← change this
+          ];
+          RunAtLoad = true;
+          KeepAlive = true;
+          StandardOutPath = "/tmp/kanata.log";
+          StandardErrorPath = "/tmp/kanata.err";
+        };
+      };
 
       fonts = {
         packages = with pkgs; [

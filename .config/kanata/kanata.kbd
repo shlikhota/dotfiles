@@ -1,0 +1,72 @@
+;; ~/.config/kanata/kanata.kbd
+;; Tap F = F, Hold F = Layer 2
+;;
+;; Layer 0 and 1 are your keyboard's existing layers
+;; Layer 2 is this software layer activated by holding F
+
+(defcfg
+  process-unmapped-keys yes   ;; Let unmodified keys pass through
+)
+
+;; ============================================================
+;; Define which physical keys we want to intercept
+;; Add more keys here as you expand your layer 2 functionality
+;; ============================================================
+(defsrc
+  f h j k l u i o
+  ret bspc min eql
+  ;; Common additions for navigation layer:
+  ;; h j k l ; '
+  ;; u i o p
+  ;; n m , .
+)
+
+;; ============================================================
+;; Layer: base (active by default)
+;; ============================================================
+(deflayer base
+  @f-layer2 h j k l u i o
+  ret bspc min eql
+  ;; Match the order of defsrc above
+)
+
+;; ============================================================
+;; Layer: layer2 (activated when holding F)
+;; ============================================================
+(deflayer layer2
+  f left down up right f13 f16 f17
+  pp mute voldwn volu
+  ;; While holding F on layer2, if you somehow tap F again, send f
+  ;; Enter -> play/pause, Backspace -> mute, - -> vol down, + -> vol up
+  ;; u -> F13, i -> F16, o -> F17
+)
+
+;; ============================================================
+;; Aliases (custom key behaviors)
+;; ============================================================
+(defalias
+  ;; tap-hold parameters:
+  ;;   tap-timeout: 200ms - max time for a tap
+  ;;   hold-timeout: 200ms - time before hold activates
+  ;;   tap-action: f - what happens on tap
+  ;;   hold-action: (layer-while-held layer2) - activates layer2 while held
+
+  f-layer2 (tap-hold 200 200 f (layer-while-held layer2))
+)
+
+;; ============================================================
+;; EXAMPLE: Expanded config with VIM-style navigation
+;; Uncomment and modify as needed:
+;; ============================================================
+;;
+;; (defsrc
+;;   f h j k l
+;; )
+;;
+;; (deflayer base
+;;   @f-layer2 h j k l
+;; )
+;;
+;; (deflayer layer2
+;;   f    left down up right
+;; )

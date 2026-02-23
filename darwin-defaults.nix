@@ -64,6 +64,50 @@
       PMPrintingExpandedStateForPrint = true;
       PMPrintingExpandedStateForPrint2 = true;
     };
+    CustomUserPreferences = {
+      "com.apple.HIToolbox" = {
+        AppleCurrentKeyboardLayoutInputSourceID = "com.apple.keylayout.US";
+        AppleDictationAutoEnable = 0;
+        AppleEnabledInputSources = [
+          {
+            InputSourceKind = "Keyboard Layout";
+            "KeyboardLayout ID" = 0;
+            "KeyboardLayout Name" = "U.S.";
+          }
+          {
+            InputSourceKind = "Keyboard Layout";
+            "KeyboardLayout ID" = 19456;
+            "KeyboardLayout Name" = "Russian";
+          }
+          {
+            InputSourceKind = "Keyboard Layout";
+            "KeyboardLayout ID" = 30778;
+            "KeyboardLayout Name" = "Czech-QWERTY";
+          }
+          {
+            "Bundle ID" = "com.apple.CharacterPaletteIM";
+            InputSourceKind = "Non Keyboard Input Method";
+          }
+          {
+            "Bundle ID" = "com.apple.PressAndHold";
+            InputSourceKind = "Non Keyboard Input Method";
+          }
+        ];
+        AppleSelectedInputSources = [
+          {
+            InputSourceKind = "Keyboard Layout";
+            "KeyboardLayout ID" = 0;
+            "KeyboardLayout Name" = "U.S.";
+          }
+        ];
+      };
+      "com.apple.symbolichotkeys" = {
+        AppleSymbolicHotKeys = {
+          # 164 = Dictation shortcut (double-press Globe/Fn key)
+          "164" = { enabled = 0; };
+        };
+      };
+    };
     CustomSystemPreferences = {
       "com.apple.DiskUtility" = {
         "DUDebugMenuEnabled" = true;
@@ -95,4 +139,16 @@
     };
     WindowManager.EnableStandardClickToShowDesktop = false;
   };
+
+  # Login items and preference activation
+  system.activationScripts.postUserActivation.text = ''
+    echo "Configuring login items..."
+    for app in "Raycast" "Shortcat"; do
+      osascript -e "tell application \"System Events\" to delete login item \"$app\"" 2>/dev/null || true
+    done
+    osascript -e 'tell application "System Events" to make login item at end with properties {path:"/Applications/Raycast.app", hidden:false}'
+    osascript -e 'tell application "System Events" to make login item at end with properties {path:"/Applications/Shortcat.app", hidden:false}'
+
+    /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
+  '';
 }

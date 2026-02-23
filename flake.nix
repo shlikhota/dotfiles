@@ -66,7 +66,7 @@
         bat
         claude-code-latest  # Always latest via npx
         unstable.codex
-        colima
+        unstable.colima
         docker
         fd
         fish

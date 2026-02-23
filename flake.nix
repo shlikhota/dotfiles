@@ -64,7 +64,7 @@
 
       environment.systemPackages = with pkgs; [
         bat
-        unstable.claude-code
+        claude-code-latest  # Always latest via npx
         unstable.codex
         colima
         docker
@@ -146,6 +146,8 @@
             overlays = [
               (final: prev: {
                 unstable = import nixpkgs-unstable { inherit system; config = nixConfig; };
+                # Custom claude-code fetched directly from Anthropic's native distribution
+                claude-code-latest = prev.callPackage ./packages/claude-code.nix { };
               })
             ];
           };

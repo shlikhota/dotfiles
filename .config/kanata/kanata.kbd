@@ -13,7 +13,7 @@
 ;; Add more keys here as you expand your layer 2 functionality
 ;; ============================================================
 (defsrc
-  f h j k l u i o
+  esc f h j k l u i o
   ret bspc min eql
   ;; Common additions for navigation layer:
   ;; h j k l ; '
@@ -25,7 +25,7 @@
 ;; Layer: base (active by default)
 ;; ============================================================
 (deflayer base
-  @f-layer2 h j k l u i o
+  esc @f-layer2 h j k l u i o
   ret bspc min eql
   ;; Match the order of defsrc above
 )
@@ -34,9 +34,10 @@
 ;; Layer: layer2 (activated when holding F)
 ;; ============================================================
 (deflayer layer2
-  f left down up right f13 f16 f17
+  grv f left down up right f13 f16 f17
   pp mute voldwn volu
   ;; While holding F on layer2, if you somehow tap F again, send f
+  ;; ESC -> ` (backtick), Shift+ESC -> ~ (tilde)
   ;; Enter -> play/pause, Backspace -> mute, - -> vol down, + -> vol up
   ;; u -> F13, i -> F16, o -> F17
 )

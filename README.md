@@ -35,7 +35,7 @@ Some things still have to do manually:
 nix-collect-garbage -d
 
 # run shell with some temporary installed packages
-nix-shell -p llama-cpp aider-chat
+nix shell nixpkgs#llama-cpp nixpkgs#aider-chat
 
 # run package without installing it globally
 nix run nixpkgs#neofetch

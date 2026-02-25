@@ -101,14 +101,20 @@
         };
       };
 
-      # Kanata daemon
+      # Kanata daemon — polls for Karabiner VirtualHID socket before exec'ing.
+      # Without the wait loop, kanata starts before karabiner-vhid is ready after
+      # reboot, exits 78, and launchd stops retrying despite KeepAlive = true.
       launchd.daemons.kanata = {
         serviceConfig = {
           Label = "org.nixos.kanata";
           ProgramArguments = [
-            "${pkgs.kanata}/bin/kanata"
-            "--cfg"
-            "/Users/${user}/.config/kanata/kanata.kbd"  # ← change this
+            "/bin/sh" "-c"
+            ''
+              while [ ! -e "/Library/Application Support/org.pqrs/tmp/rootonly/vhidd_server" ]; do
+                sleep 1
+              done
+              exec ${pkgs.kanata}/bin/kanata --cfg /Users/${user}/.config/kanata/kanata.kbd
+            ''
           ];
           RunAtLoad = true;
           KeepAlive = true;

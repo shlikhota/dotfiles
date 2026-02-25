@@ -64,50 +64,6 @@
       PMPrintingExpandedStateForPrint = true;
       PMPrintingExpandedStateForPrint2 = true;
     };
-    CustomUserPreferences = {
-      "com.apple.HIToolbox" = {
-        AppleCurrentKeyboardLayoutInputSourceID = "com.apple.keylayout.US";
-        AppleDictationAutoEnable = 0;
-        AppleEnabledInputSources = [
-          {
-            InputSourceKind = "Keyboard Layout";
-            "KeyboardLayout ID" = 0;
-            "KeyboardLayout Name" = "U.S.";
-          }
-          {
-            InputSourceKind = "Keyboard Layout";
-            "KeyboardLayout ID" = 19456;
-            "KeyboardLayout Name" = "Russian";
-          }
-          {
-            InputSourceKind = "Keyboard Layout";
-            "KeyboardLayout ID" = 30778;
-            "KeyboardLayout Name" = "Czech-QWERTY";
-          }
-          {
-            "Bundle ID" = "com.apple.CharacterPaletteIM";
-            InputSourceKind = "Non Keyboard Input Method";
-          }
-          {
-            "Bundle ID" = "com.apple.PressAndHold";
-            InputSourceKind = "Non Keyboard Input Method";
-          }
-        ];
-        AppleSelectedInputSources = [
-          {
-            InputSourceKind = "Keyboard Layout";
-            "KeyboardLayout ID" = 0;
-            "KeyboardLayout Name" = "U.S.";
-          }
-        ];
-      };
-      "com.apple.symbolichotkeys" = {
-        AppleSymbolicHotKeys = {
-          # 164 = Dictation shortcut (double-press Globe/Fn key)
-          "164" = { enabled = 0; };
-        };
-      };
-    };
     CustomSystemPreferences = {
       "com.apple.DiskUtility" = {
         "DUDebugMenuEnabled" = true;
@@ -141,14 +97,97 @@
   };
 
   # Login items and preference activation
-  system.activationScripts.postUserActivation.text = ''
+  system.activationScripts.postActivation.text = ''
     echo "Configuring login items..."
-    for app in "Raycast" "Shortcat"; do
-      osascript -e "tell application \"System Events\" to delete login item \"$app\"" 2>/dev/null || true
-    done
-    osascript -e 'tell application "System Events" to make login item at end with properties {path:"/Applications/Raycast.app", hidden:false}'
-    osascript -e 'tell application "System Events" to make login item at end with properties {path:"/Applications/Shortcat.app", hidden:false}'
+    sudo -u "${user}" bash -c '
+      for app in "Raycast" "Shortcat"; do
+        osascript -e "tell application \"System Events\" to delete login item \"$app\"" &>/dev/null || true
+      done
+      osascript -e "tell application \"System Events\" to make login item at end with properties {path:\"/Applications/Raycast.app\", hidden:false}" &>/dev/null
+      echo "  added login item: Raycast"
+      osascript -e "tell application \"System Events\" to make login item at end with properties {path:\"/Applications/Shortcat.app\", hidden:false}" &>/dev/null
+      echo "  added login item: Shortcat"
+    '
 
-    /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
+    # Input sources and keyboard settings (use defaults write to merge, not replace domain)
+    sudo -u "${user}" defaults write com.apple.HIToolbox AppleCurrentKeyboardLayoutInputSourceID -string "com.apple.keylayout.US"
+    sudo -u "${user}" defaults write com.apple.HIToolbox AppleDictationAutoEnable -int 0
+    sudo -u "${user}" defaults write com.apple.HIToolbox AppleEnabledInputSources '
+      <array>
+        <dict>
+          <key>InputSourceKind</key><string>Keyboard Layout</string>
+          <key>KeyboardLayout ID</key><integer>0</integer>
+          <key>KeyboardLayout Name</key><string>U.S.</string>
+        </dict>
+        <dict>
+          <key>InputSourceKind</key><string>Keyboard Layout</string>
+          <key>KeyboardLayout ID</key><integer>19456</integer>
+          <key>KeyboardLayout Name</key><string>Russian</string>
+        </dict>
+        <dict>
+          <key>InputSourceKind</key><string>Keyboard Layout</string>
+          <key>KeyboardLayout ID</key><integer>30778</integer>
+          <key>KeyboardLayout Name</key><string>Czech-QWERTY</string>
+        </dict>
+        <dict>
+          <key>Bundle ID</key><string>com.apple.CharacterPaletteIM</string>
+          <key>InputSourceKind</key><string>Non Keyboard Input Method</string>
+        </dict>
+        <dict>
+          <key>Bundle ID</key><string>com.apple.PressAndHold</string>
+          <key>InputSourceKind</key><string>Non Keyboard Input Method</string>
+        </dict>
+      </array>'
+    sudo -u "${user}" defaults write com.apple.HIToolbox AppleInputSourceHistory '
+      <array>
+        <dict>
+          <key>InputSourceKind</key><string>Keyboard Layout</string>
+          <key>KeyboardLayout ID</key><integer>0</integer>
+          <key>KeyboardLayout Name</key><string>U.S.</string>
+        </dict>
+      </array>'
+    sudo -u "${user}" defaults write com.apple.HIToolbox AppleSelectedInputSources '
+      <array>
+        <dict>
+          <key>InputSourceKind</key><string>Keyboard Layout</string>
+          <key>KeyboardLayout ID</key><integer>0</integer>
+          <key>KeyboardLayout Name</key><string>U.S.</string>
+        </dict>
+      </array>'
+
+    # Disable Spotlight shortcut (Cmd+Space) so Raycast can use it
+    sudo -u "${user}" defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add "64" '
+      <dict>
+        <key>enabled</key><false/>
+        <key>value</key><dict>
+          <key>parameters</key>
+          <array>
+            <integer>65535</integer>
+            <integer>49</integer>
+            <integer>1048576</integer>
+          </array>
+          <key>type</key><string>standard</string>
+        </dict>
+      </dict>'
+    # Disable dictation shortcut (double-press Globe/Fn key)
+    sudo -u "${user}" defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add "164" '
+      <dict>
+        <key>enabled</key><false/>
+        <key>value</key><dict>
+          <key>parameters</key>
+          <array>
+            <integer>65535</integer>
+            <integer>65535</integer>
+            <integer>0</integer>
+          </array>
+          <key>type</key><string>standard</string>
+        </dict>
+      </dict>'
+
+    # Trackpad: tap to click + three-finger drag (currentHost domain required for runtime effect)
+    sudo -u "${user}" defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
+    sudo -u "${user}" defaults -currentHost write NSGlobalDomain com.apple.trackpad.threeFingerDragGesture -bool true
+
+    sudo -u "${user}" /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
   '';
 }

@@ -24,8 +24,16 @@ if ! is_xcode_installed; then
     echo "Installing dependencies..."
     xcode-select --install
     echo "Waiting for Xcode command line tools to finish installing..."
+    max_wait_seconds=1800
+    waited_seconds=0
     while ! is_xcode_installed; do
-        sleep 1
+        if (( waited_seconds >= max_wait_seconds )); then
+            echo "Timed out after ${max_wait_seconds}s waiting for Xcode command line tools."
+            echo "Please complete the installer or rerun this script."
+            exit 1
+        fi
+        sleep 5
+        waited_seconds=$((waited_seconds + 5))
     done
     echo "Xcode command line tools has been installed."
 else

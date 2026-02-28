@@ -93,7 +93,7 @@
   "lsp": {
     "omnisharp": {
       "binary": {
-        "path": "/Users/evgenii/Downloads/omnisharp-osx-arm64-net6.0/OmniSharp",
+        "path": "/Users/evgenii/.local/lib/omnisharp/OmniSharp",
         "arguments": ["-lsp"]
       }
     }

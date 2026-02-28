@@ -16,7 +16,7 @@ in
       brews = [  "keyboardSwitcher" "mole" ];
       caskArgs.no_quarantine = true;
       casks = [
-        {name = "ghostty"; greedy = false; }
+        {name = "ghostty@tip"; greedy = false; }
         {name = "shortcat"; greedy = true; }
         {name = "discord"; greedy = true; }
         {name = "telegram"; greedy = false; }
@@ -59,13 +59,6 @@ in
           ];
           sessionVariables.SHELL = "fish";
           file = lib.mkMerge [
-            { ".config/fish/conf.d/90-dotfiles-paths.fish".text = ''
-              if test -d "${dotfiles}/.config/fish/functions"
-                set -g fish_function_path "${dotfiles}/.config/fish/functions" $fish_function_path
-              end
-              if test -d "${dotfiles}/.config/fish/completions"
-                set -g fish_complete_path "${dotfiles}/.config/fish/completions" $fish_complete_path
-              end''; }
             { ".config/hello".text = "hello world"; }
             { "Library/LaunchAgents/environment.plist".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/environment.plist"; }
             { ".config/bat".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/.config/bat"; }

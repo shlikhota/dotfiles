@@ -101,12 +101,14 @@
     echo "Configuring login items..."
     sudo -u "${user}" bash -c '
       for app in "Raycast" "Shortcat"; do
-        osascript -e "tell application \"System Events\" to delete login item \"$app\"" &>/dev/null || true
+        exists=$(osascript -e "tell application \"System Events\" to get the name of every login item" 2>/dev/null | grep -c "$app" || true)
+        if [ "$exists" -eq 0 ]; then
+          osascript -e "tell application \"System Events\" to make login item at end with properties {path:\"/Applications/$app.app\", hidden:false}" &>/dev/null
+          echo "  added login item: $app"
+        else
+          echo "  login item already exists: $app"
+        fi
       done
-      osascript -e "tell application \"System Events\" to make login item at end with properties {path:\"/Applications/Raycast.app\", hidden:false}" &>/dev/null
-      echo "  added login item: Raycast"
-      osascript -e "tell application \"System Events\" to make login item at end with properties {path:\"/Applications/Shortcat.app\", hidden:false}" &>/dev/null
-      echo "  added login item: Shortcat"
     '
 
     # Input sources and keyboard settings (use defaults write to merge, not replace domain)

@@ -65,43 +65,12 @@ return {
             },
         },
     },
-    -- {
-    --     "rmagatti/auto-session",
-    --     lazy = false,
-    --     config = function()
-    --         require("auto-session").setup({
-    --             auto_session_enable_last_session = false,
-    --             auto_session_last_session_dir = vim.fn.stdpath("data") .. "/sessions/",
-    --             auto_session_root_dir = vim.fn.stdpath("data") .. "/sessions/",
-    --             auto_session_enabled = true,
-    --             log_level = vim.log.levels.ERROR,
-    --             auto_session_suppress_dirs = { "~/", "~/Projects", "~/Downloads", "/" },
-    --             auto_save_enabled = true,
-    --             auto_session_create_enabled = true,
-    --             no_restore_cmds = {
-    --                 'Neotree show',
-    --             },
-    --             post_restore_cmds = {
-    --                 'Neotree show',
-    --             },
-    --             session_lens = {
-    --                 buftypes_to_ignore = {},
-    --                 load_on_setup = true,
-    --                 theme_conf = { border = true },
-    --                 previewer = false,
-    --             },
-    --         })
-    --         vim.keymap.set("n", "<Leader>ls", require("auto-session.session-lens").search_session, {
-    --             noremap = true,
-    --         })
-    --     end,
-    -- },
     {
         "michaelb/sniprun",
         init = function()
-            vim.api.nvim_set_keymap("v", "<leader>f", "<Plug>SnipRun", { silent = true })
-            vim.api.nvim_set_keymap("n", "<leader>f", "<Plug>SnipRunOperator", { silent = true })
-            vim.api.nvim_set_keymap("n", "<leader>ff", "<Plug>SnipRun", { silent = true })
+            vim.api.nvim_set_keymap("v", "<leader>r", "<Plug>SnipRun", { silent = true })
+            vim.api.nvim_set_keymap("n", "<leader>r", "<Plug>SnipRunOperator", { silent = true })
+            vim.api.nvim_set_keymap("n", "<leader>rr", "<Plug>SnipRun", { silent = true })
         end,
         config = function()
             require("sniprun").setup({

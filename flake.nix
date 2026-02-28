@@ -39,7 +39,7 @@
 
     allowUnfreePackages = [ "claude-code" ];
     nixConfig = {
-      allowUnfree = true;
+      allowUnfree = false;
       allowUnfreePredicate = pkg:
         builtins.elem (nixpkgs.lib.getName pkg) allowUnfreePackages;
     };
@@ -49,7 +49,11 @@
       # $ nix-env -qaP | grep wget
       nix = {
         settings.experimental-features = [ "nix-command" "flakes" ];
-        gc = { automatic = true; options = "--delete-older-than 14d"; };
+        gc = {
+          automatic = true;
+          options = "--delete-older-than 14d";
+          interval = { Weekday = 7; Hour = 3; Minute = 0; };
+        };
         optimise.automatic = true;
       };
 

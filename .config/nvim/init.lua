@@ -2,3 +2,4 @@
 vim.g.loaded_netrwPlugin = 1
 require("config.lazy")
 vim.opt.clipboard = "unnamedplus"
+vim.opt.sessionoptions = { "buffers", "curdir", "tabpages", "winsize" }

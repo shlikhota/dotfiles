@@ -43,7 +43,7 @@ return {
             "MunifTanjim/nui.nvim",
             -- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
         },
-        lazy = false,
+        lazy = true,
         opts = {
             follow_current_file = {
                 enabled = true,
@@ -64,6 +64,42 @@ return {
                 },
             },
         },
+    },
+    {
+        "folke/persistence.nvim",
+        init = function()
+            vim.api.nvim_create_autocmd("User", {
+                pattern = "PersistenceSavePre",
+                callback = function()
+                    -- Close neo-tree and all non-file buffers before saving session
+                    vim.cmd("Neotree close")
+                    -- Clear arglist so "." directory arg doesn't trigger neo-tree on restore
+                    vim.cmd("%argdelete")
+                    for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+                        local bt = vim.bo[buf].buftype
+                        local name = vim.api.nvim_buf_get_name(buf)
+                        if bt ~= "" or vim.fn.isdirectory(name) == 1 then
+                            pcall(vim.api.nvim_buf_delete, buf, { force = true })
+                        end
+                    end
+                end,
+            })
+            vim.api.nvim_create_autocmd("User", {
+                pattern = "PersistenceLoadPost",
+                callback = function()
+                    vim.cmd("Neotree show")
+                end,
+            })
+            -- Auto-restore session when opening nvim with no file arguments
+            vim.api.nvim_create_autocmd("VimEnter", {
+                nested = true,
+                callback = function()
+                    if vim.fn.argc() == 0 and not vim.g.started_with_stdin then
+                        require("persistence").load()
+                    end
+                end,
+            })
+        end,
     },
     {
         "michaelb/sniprun",

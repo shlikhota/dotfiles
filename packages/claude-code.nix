@@ -2,13 +2,13 @@
 
 let
   baseUrl = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases";
-  version = "2.1.50";
+  version = "2.1.70";
   # Update these with: scripts/update-claude.sh
   sha256 = {
-    "aarch64-darwin" = "sha256-o3YoYfTQZLQNfbTnkY8ccoFIw44Xeek3C/WU1mYMPrQ=";
-    "x86_64-darwin"  = "sha256-IhWBjG4qT6BJfuiKGfjYSrPwuynMQVCjCqd19Xuisyw=";
-    "aarch64-linux"  = "sha256-TissnbL5eRjV7cla4d4D0jCma5TV+jGlfMZzdC7Griw=";
-    "x86_64-linux"   = "sha256-dAQnORl8WKAB8fZ0FMDYlWYnnu8uOTlSgIcrg9QxfTg=";
+    "aarch64-darwin" = "sha256-hxiIAhyqpDNkKPEXVJMqVlXNlTumqByCqdamtgp+1u4=";
+    "x86_64-darwin"  = "sha256-M4dV3OWlyZQZ83vo3UJEEMNfxHb32Mys2e1+8zuEc64=";
+    "aarch64-linux"  = "sha256-JkxmnOR0C7SJawesARAZC89hjt3U+wBos/4s6YlzRoI=";
+    "x86_64-linux"   = "sha256-HlwQEeyJnvDKnwgRwTw+1EQ3Qirtha9gDV/lB0b6rx0=";
   };
   platform = {
     "aarch64-darwin" = "darwin-arm64";

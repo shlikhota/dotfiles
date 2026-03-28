@@ -1,9 +1,9 @@
 { stdenvNoCC, fetchurl, nodejs_22, makeWrapper }:
 
 let
-  version = "2.1.70";
+  version = "2.1.86";
   # Update with: scripts/update-claude.sh
-  hash = "sha512-wbpEAfQSVfwAAYGnBgWjlLaKl59UKhOnj0RK6pCd1RexqVj2wJpcxOVKH3lVWuazp9ysAJej/wOwkVcU3opCPg==";
+  hash = "sha512-Kd26SOYr9ULjSBTt8aPPhS6OkLKBV7qO9rFRWufK5U+WP219YJSbHO9erePtLxvOVl4/OmW/KHE2fqdW0McDNA==";
 in
 stdenvNoCC.mkDerivation {
   pname = "claude-code";

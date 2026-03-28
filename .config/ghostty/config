@@ -22,5 +22,6 @@ window-title-font-family = "Berkeley Mono"
 keybind = shift+enter=text:\n
 # workaround: navigate the buffer with Cmd+Shift+H / Cmd+Shift+J
 keybind = "command+shift+h=text:nvim + --noplugin "
+keybind = global:cmd+backquote=toggle_quick_terminal
 custom-shader = ~/.config/ghostty/shaders/cursor_blaze.glsl
 # custom-shader = ~/.config/ghostty/shaders/manga_slash.glsl

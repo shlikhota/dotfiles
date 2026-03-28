@@ -77,11 +77,24 @@ in
             '';
             shellAliases = {
               ga = "git add";
+              gaa = "git add --all";
+              gb = "git branch";
               gc = "git commit";
+              gcb = "git checkout -b";
+              gcmsg = "git commit -m";
               gco = "git checkout";
               gcp = "git cherry-pick";
+              gd = "git diff";
               gdiff = "git diff";
+              gds = "git diff --staged";
+              gf = "git fetch";
+              gfa = "git fetch --all --prune";
+              gl = "git pull";
+              glog = "git log --oneline --decorate --graph";
+              glol = "git log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset'";
               gp = "git push";
+              gpsup = "git push --set-upstream origin HEAD";
+              gsb = "git status -sb";
               gs = "git status";
               gt = "git tag";
             };

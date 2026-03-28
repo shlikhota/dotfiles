@@ -60,6 +60,7 @@ in
           sessionVariables.SHELL = "fish";
           file = lib.mkMerge [
             { ".config/hello".text = "hello world"; }
+            { ".hushlogin".text = ""; }
             { "Library/LaunchAgents/environment.plist".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/environment.plist"; }
             { ".config/bat".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/.config/bat"; }
             { ".config/git".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/.config/git"; }

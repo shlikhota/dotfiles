@@ -105,6 +105,13 @@
         };
       };
 
+      # Copy kanata to a stable path so macOS TCC (Input Monitoring) permission
+      # survives nix updates — the /nix/store path changes on every update,
+      # which invalidates the TCC entry. /usr/local/bin/kanata stays constant.
+      system.activationScripts.kanataStable.text = ''
+        install -m 755 "${pkgs.kanata}/bin/kanata" /usr/local/bin/kanata
+      '';
+
       # Kanata daemon — polls for Karabiner VirtualHID socket before exec'ing.
       # Without the wait loop, kanata starts before karabiner-vhid is ready after
       # reboot, exits 78, and launchd stops retrying despite KeepAlive = true.
@@ -117,7 +124,7 @@
               while [ ! -e "/Library/Application Support/org.pqrs/tmp/rootonly/vhidd_server" ]; do
                 sleep 1
               done
-              exec ${pkgs.kanata}/bin/kanata --cfg /Users/${user}/.config/kanata/kanata.kbd
+              exec /usr/local/bin/kanata --cfg /Users/${user}/.config/kanata/kanata.kbd
             ''
           ];
           RunAtLoad = true;

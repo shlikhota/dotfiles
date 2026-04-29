@@ -5,4 +5,10 @@ return {
       colorscheme = "catppuccin-frappe",
     },
   },
+  {
+    "folke/snacks.nvim",
+    opts = {
+      scroll = { enabled = false },
+    },
+  },
 }

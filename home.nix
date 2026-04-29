@@ -76,6 +76,18 @@ in
             shellInit = ''
               set -g fish_key_bindings fish_vi_key_bindings
             '';
+            functions.hey = ''
+              set prompt $argv[1]
+              if not isatty stdin
+                set context "$(cat)"
+                claude --print (printf '%s\n\n%s' "$context" "$prompt")
+              else if test (count $argv) -ge 2
+                set context "$(cat $argv[2])"
+                claude --print (printf '%s\n\n%s' "$context" "$prompt")
+              else
+                claude --print "$prompt"
+              end
+            '';
             shellAliases = {
               ga = "git add";
               gaa = "git add --all";

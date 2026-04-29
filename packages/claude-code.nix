@@ -1,36 +1,42 @@
-{ stdenvNoCC, fetchurl, nodejs_22, makeWrapper }:
+{ stdenvNoCC, fetchurl, system }:
 
 let
-  version = "2.1.86";
-  # Update with: scripts/update-claude.sh
-  hash = "sha512-Kd26SOYr9ULjSBTt8aPPhS6OkLKBV7qO9rFRWufK5U+WP219YJSbHO9erePtLxvOVl4/OmW/KHE2fqdW0McDNA==";
+  version = "2.1.121";
+
+  # Native binary hashes per platform
+  hashes = {
+    aarch64-darwin = "sha512-QQEOsxmRUf45PGS88RsiijU1De9DP7tcwxgaYdpwLtD1IMQZFSW3KwsOpLeYUIlvsAKfxB3O/CklEEr3kAAzXg==";
+  };
+
+  platformMap = {
+    aarch64-darwin = "darwin-arm64";
+  };
+
+  platform = platformMap.${system} or (throw "Unsupported system: ${system}");
+  hash = hashes.${system} or (throw "No hash for system: ${system}");
 in
 stdenvNoCC.mkDerivation {
   pname = "claude-code";
   inherit version;
 
   src = fetchurl {
-    url = "https://registry.npmjs.org/@anthropic-ai/claude-code/-/claude-code-${version}.tgz";
+    url = "https://registry.npmjs.org/@anthropic-ai/claude-code-${platform}/-/claude-code-${platform}-${version}.tgz";
     inherit hash;
   };
 
-  # npm tarballs extract into a "package/" subdirectory
   sourceRoot = "package";
 
-  nativeBuildInputs = [ makeWrapper ];
   dontBuild = true;
 
   installPhase = ''
-    mkdir -p $out/lib/claude-code $out/bin
-    cp -r . $out/lib/claude-code/
-    makeWrapper ${nodejs_22}/bin/node $out/bin/claude \
-      --add-flags "$out/lib/claude-code/cli.js"
+    mkdir -p $out/bin
+    install -m 755 claude $out/bin/claude
   '';
 
   meta = {
     description = "Claude Code CLI";
     homepage = "https://claude.ai";
     mainProgram = "claude";
-    platforms = [ "aarch64-darwin" "x86_64-darwin" "aarch64-linux" "x86_64-linux" ];
+    platforms = [ "aarch64-darwin" ];
   };
 }

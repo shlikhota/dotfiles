@@ -76,20 +76,25 @@
         fish
         fzf
         git
+        git-lfs
         go
         unstable.golangci-lint
         unstable.gopls
         jq
-        kanata
+        unstable.kanata
         kubectl
         k9s
+        unstable.llama-cpp
         neovim
         nixd
-        ollama
+        nodejs_24
+        ollama-latest
+        python314
         ripgrep
         speedtest-cli
         starship
         sshs
+        uv
         yazi
       ];
 
@@ -109,7 +114,7 @@
       # survives nix updates — the /nix/store path changes on every update,
       # which invalidates the TCC entry. /usr/local/bin/kanata stays constant.
       system.activationScripts.kanataStable.text = ''
-        install -m 755 "${pkgs.kanata}/bin/kanata" /usr/local/bin/kanata
+        install -m 755 "${pkgs.unstable.kanata}/bin/kanata" /usr/local/bin/kanata
       '';
 
       # Kanata daemon — polls for Karabiner VirtualHID socket before exec'ing.
@@ -165,6 +170,8 @@
                 unstable = import nixpkgs-unstable { inherit system; config = nixConfig; };
                 # Custom claude-code fetched directly from Anthropic's native distribution
                 claude-code-latest = prev.callPackage ./packages/claude-code.nix { };
+                # Custom ollama pinned to a specific release, updated via scripts/update-ollama.sh
+                ollama-latest = prev.callPackage ./packages/ollama.nix { };
               })
             ];
           };

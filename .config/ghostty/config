@@ -25,3 +25,4 @@ keybind = "command+shift+h=text:nvim + --noplugin "
 keybind = global:cmd+backquote=toggle_quick_terminal
 custom-shader = ~/.config/ghostty/shaders/cursor_blaze.glsl
 # custom-shader = ~/.config/ghostty/shaders/manga_slash.glsl
+custom-shader = ~/.config/ghostty/shaders/last_letter_zoom.glsl

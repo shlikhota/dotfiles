@@ -1,5 +1,22 @@
 // documentation: https://zed.dev/docs/configuring-zed
 {
+  "project_panel": {
+    "dock": "right"
+  },
+  "outline_panel": {
+    "dock": "right"
+  },
+  "collaboration_panel": {
+    "dock": "right"
+  },
+  "agent": {
+    "dock": "left",
+    "favorite_models": [],
+    "model_parameters": []
+  },
+  "git_panel": {
+    "dock": "right"
+  },
   "context_servers": {
     "mcp-server-context7": {
       "enabled": true,
@@ -13,9 +30,6 @@
   },
   "icon_theme": "Catppuccin Frappé",
   "language_models": {
-    // "ollama": {
-    //   "api_url": "http://192.168.0.17:11434"
-    // }
   },
   "auto_install_extensions": {
     "catppuccin": true,

@@ -33,11 +33,11 @@ sudo /Applications/.Karabiner-VirtualHIDDevice-Manager.app/Contents/MacOS/Karabi
 2. Click **+** to add an application
 3. Press `Cmd + Shift + G` and enter:
    ```
-   /run/current-system/sw/bin/kanata
+   /usr/local/bin/kanata
    ```
 4. Click **Add** and ensure the toggle is **enabled**
 
-> **Note:** If the path doesn't work, first run `darwin-rebuild switch`, then find the path with `which kanata` and add that instead.
+> **Note:** The nix-darwin config copies `kanata` to `/usr/local/bin/kanata` on each rebuild so this stable path keeps working even after Nix store GC.
 
 ### 4. Check Service Status
 

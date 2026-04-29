@@ -55,19 +55,4 @@
   f-layer2 (tap-hold 200 200 f (layer-while-held layer2))
 )
 
-;; ============================================================
-;; EXAMPLE: Expanded config with VIM-style navigation
-;; Uncomment and modify as needed:
-;; ============================================================
-;;
-;; (defsrc
-;;   f h j k l
-;; )
-;;
-;; (deflayer base
-;;   @f-layer2 h j k l
-;; )
-;;
-;; (deflayer layer2
-;;   f    left down up right
-;; )
+

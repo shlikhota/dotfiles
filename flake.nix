@@ -44,7 +44,7 @@
         builtins.elem (nixpkgs.lib.getName pkg) allowUnfreePackages;
     };
 
-    systemConfiguration = { pkgs, ... }: {
+    systemConfiguration = { pkgs, lib, ... }: {
       # List packages installed in system profile. To search by name, run:
       # $ nix-env -qaP | grep wget
       nix = {
@@ -74,8 +74,10 @@
         docker
         fd
         fish
+        unstable.flyctl
         fzf
         git
+        unstable.delta
         git-lfs
         go
         unstable.golangci-lint
@@ -113,7 +115,8 @@
       # Copy kanata to a stable path so macOS TCC (Input Monitoring) permission
       # survives nix updates — the /nix/store path changes on every update,
       # which invalidates the TCC entry. /usr/local/bin/kanata stays constant.
-      system.activationScripts.kanataStable.text = ''
+      system.activationScripts.extraActivation.text = lib.mkAfter ''
+        install -d -m 755 /usr/local/bin
         install -m 755 "${pkgs.unstable.kanata}/bin/kanata" /usr/local/bin/kanata
       '';
 
@@ -168,6 +171,11 @@
             overlays = [
               (final: prev: {
                 unstable = import nixpkgs-unstable { inherit system; config = nixConfig; };
+                fish = prev.runCommand "${prev.fish.name}-resigned" { } ''
+                  cp -R ${prev.fish} "$out"
+                  chmod -R u+w "$out"
+                  /usr/bin/codesign --force --sign - "$out/bin/fish"
+                '';
                 # Custom claude-code fetched directly from Anthropic's native distribution
                 claude-code-latest = prev.callPackage ./packages/claude-code.nix { };
                 # Custom ollama pinned to a specific release, updated via scripts/update-ollama.sh

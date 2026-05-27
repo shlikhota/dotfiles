@@ -10,6 +10,14 @@
 
 [core]
   ignorecase = false
+  pager = delta
+
+[delta]
+  side-by-side = true
+  line-numbers = true
+  navigate = true
+  syntax-theme = Catppuccin Frappe
+
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f

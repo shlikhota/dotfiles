@@ -21,7 +21,7 @@ in
         {name = "discord"; greedy = true; }
         {name = "telegram"; greedy = false; }
         {name = "zoom"; greedy = true; }
-        {name = "iina"; greedy = true; }
+        # {name = "iina"; greedy = true; }
         {name = "raycast"; greedy = false; }
         {name = "ungoogled-chromium"; greedy = false; }
         {name = "zed"; greedy = false; }
@@ -111,6 +111,11 @@ in
               gs = "git status";
               gt = "git tag";
             };
+          };
+          direnv = {
+            enable = true;
+            nix-direnv.enable = true;
+            silent = true;
           };
           fzf.enable = true;
           home-manager.enable = true;

@@ -2,16 +2,16 @@
   description = "System flake configuration";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-25.11-darwin";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-26.05-darwin";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
-    nix-darwin.url = "github:nix-darwin/nix-darwin/nix-darwin-25.11";
+    nix-darwin.url = "github:nix-darwin/nix-darwin/nix-darwin-26.05";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
 
-    home-manager.url = "github:nix-community/home-manager/release-25.11";
+    home-manager.url = "github:nix-community/home-manager/release-26.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    catppuccin.url = "github:catppuccin/nix/release-25.11";
+    catppuccin.url = "github:catppuccin/nix/release-26.05";
     nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
 
     homebrew-bundle = {
@@ -71,7 +71,7 @@
         claude-code-latest  # Always latest via npx
         unstable.codex
         unstable.colima
-        docker
+        unstable.docker
         fd
         fish
         unstable.flyctl
@@ -139,6 +139,43 @@
           KeepAlive = true;
           StandardOutPath = "/tmp/kanata.log";
           StandardErrorPath = "/tmp/kanata.err";
+        };
+      };
+
+      # Watches for keyboard connect/disconnect events and restarts kanata so it
+      # picks up the new device. Kanata opens HID handles at startup only, so any
+      # keyboard plugged in after it starts is invisible until a restart.
+      #
+      # Startup delay: kanata creates a Karabiner virtual HID keyboard when it
+      # initialises. Without waiting for that to settle, the watcher would see
+      # the virtual device appear, kick kanata, see it appear again, and loop
+      # forever. The 15 s sleep gives kanata time to fully start and stabilise
+      # the device list before we take the first snapshot.
+      launchd.daemons.kanata-watcher = {
+        serviceConfig = {
+          Label = "org.nixos.kanata-watcher";
+          ProgramArguments = [
+            "/bin/sh" "-c"
+            ''
+              sleep 15
+              prev=$(hidutil list 2>/dev/null | grep -i keyboard | sort | md5)
+              while true; do
+                sleep 3
+                current=$(hidutil list 2>/dev/null | grep -i keyboard | sort | md5)
+                if [ "$current" != "$prev" ]; then
+                  launchctl kickstart -k system/org.nixos.kanata 2>/dev/null || true
+                  sleep 15
+                  prev=$(hidutil list 2>/dev/null | grep -i keyboard | sort | md5)
+                else
+                  prev="$current"
+                fi
+              done
+            ''
+          ];
+          RunAtLoad = true;
+          KeepAlive = true;
+          StandardOutPath = "/tmp/kanata-watcher.log";
+          StandardErrorPath = "/tmp/kanata-watcher.err";
         };
       };
 

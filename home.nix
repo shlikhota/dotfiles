@@ -50,10 +50,9 @@ in
         xdg.configHome = "${config.home.homeDirectory}/.config";
         home = {
           enableNixpkgsReleaseCheck = false;
-          stateVersion = "25.11";
+          stateVersion = "26.05";
           packages = with pkgs; [
             cowsay
-            neofetch
             qmk
             nginx-language-server
           ];

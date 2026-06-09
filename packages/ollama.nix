@@ -1,9 +1,9 @@
 { stdenvNoCC, fetchurl, makeWrapper }:
 
 let
-  version = "0.21.2";
+  version = "0.30.7";
   # Update with: scripts/update-ollama.sh
-  hash = "sha256-8Uu3Ydw+8lGmgIG0iIkgwYer4+1TSD24E+6PucChrz4=";
+  hash = "sha256-+js4LkuQxZXh9HPG3yzR7K0nDE0EIl9rBp5bhqEPPTM=";
 in
 stdenvNoCC.mkDerivation {
   pname = "ollama";

@@ -17,6 +17,7 @@ in
       # caskArgs.no_quarantine = true;
       casks = [
         {name = "ghostty@tip"; greedy = false; }
+        {name = "cocoapods"; greedy = true; }
         {name = "shortcat"; greedy = true; }
         {name = "discord"; greedy = true; }
         {name = "telegram"; greedy = false; }
@@ -35,7 +36,7 @@ in
         "homebrew/core"
         "homebrew/cask"
         "homebrew/bundle"
-        "lutzifer/tap"
+        "lutzifer/homebrew-tap"
       ];
     };
 
@@ -43,6 +44,9 @@ in
       useGlobalPkgs = true;
       useUserPackages = true;
       verbose = true;
+      # Let home-manager adopt pre-existing files (e.g. ~/.homebrew/trust.json
+      # created out-of-band) by backing them up instead of refusing to clobber.
+      backupFileExtension = "backup";
 
       users.${user} = {pkgs, config, lib, ...}:{
         imports = [ catppuccin.homeModules.catppuccin ];
@@ -59,6 +63,14 @@ in
           sessionVariables.SHELL = "fish";
           file = lib.mkMerge [
             { ".config/hello".text = "hello world"; }
+            # Homebrew 6.0 tap-trust: the darwin activation runs `brew bundle`
+            # without XDG_CONFIG_HOME, so it reads trust from ~/.homebrew/trust.json
+            # rather than ~/.config/homebrew/trust.json. Pre-trust the third-party tap.
+            { ".homebrew/trust.json".text = builtins.toJSON {
+                trustedformulae = [ "lutzifer/tap/keyboardswitcher" ];
+                trustedtaps = [ "lutzifer/tap" ];
+              };
+            }
             { ".hushlogin".text = ""; }
             { "Library/LaunchAgents/environment.plist".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/environment.plist"; }
             { ".config/bat".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/.config/bat"; }
